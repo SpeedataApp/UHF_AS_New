@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spinner_region"
+            android:layout_width="240dp"
+            android:layout_height="60dp" />
+
+        <Button
+            android:id="@+id/button_set_region"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/btn_set" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/antenna_p" />
+
+        <EditText
+            android:id="@+id/editText_antenna"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:inputType="number">
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/button_set_antenna"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.56"
+            android:text="@string/btn_set" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_dianpin"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="频点:"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/et_pin_dian"
+            android:inputType="numberDecimal"
+            android:layout_width="180dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/button_set_pindian"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.56"
+            android:text="@string/btn_set" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/ll_zaibo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="载波:"
+            android:textSize="15sp" />
+
+        <EditText
+            android:hint="0-31"
+            android:id="@+id/et_zaibo"
+            android:inputType="numberDecimal"
+            android:layout_width="180dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:id="@+id/button_zaibo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.56"
+            android:text="@string/btn_set" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView_set_status"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:text="@string/text_null" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/button_set_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_bk" />
+
+    </LinearLayout>
+
+</LinearLayout>

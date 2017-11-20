@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/btn_6b_status"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Item_Tag_EPC" />
+
+        <TextView
+            android:id="@+id/textView_epc_epc"
+            android:layout_width="240dp"
+            android:layout_height="43dp"
+            android:layout_weight="0.93"
+            android:text="@string/TextView_Null" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView_inv_rt"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Item_Access_Pswd" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/editText_epc_passwd"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/VALUE_ZERO" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Item_EPC_Length" />
+
+        <EditText
+            android:inputType="number"
+            android:id="@+id/editText_epc_epclength"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Item_New_EPC" />
+
+        <EditText
+            android:id="@+id/editText_epc_newepc"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:textColor="#f11304"
+        android:id="@+id/textView_epc_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.66"
+        android:text="@string/TextView_Null" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_epc_ok"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.51"
+            android:text="@string/Ok_btn" />
+
+        <Button
+            android:id="@+id/btn_epc_cancle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.41"
+            android:text="@string/Cancle_btn" />
+    </LinearLayout>
+
+</LinearLayout>

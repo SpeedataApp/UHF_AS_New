@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/listView_search_epclist"
+        android:layout_width="match_parent"
+        android:layout_height="314dp"
+        android:layout_weight="0.08" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.01" >
+
+        <CheckBox
+            android:id="@+id/checkBox_beep"
+            android:layout_width="83dp"
+            android:layout_height="match_parent"
+            android:text="@string/cb_beep" />
+
+        <TextView
+            android:id="@+id/textView_search_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.03"
+            android:text="@string/TextView_Null" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_search_action"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21"
+            android:text="@string/Start_Search_Btn" />
+
+        <Button
+            android:id="@+id/btn_search_cancle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.19"
+            android:text="@string/Cancle_btn" />
+    </LinearLayout>
+
+</LinearLayout>

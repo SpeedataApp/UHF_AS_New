@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/spinner_invs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView3_invs"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/read_addr" />
+
+        <EditText
+            android:id="@+id/editText_invs_addr"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView4_invs"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/read_count" />
+
+        <EditText
+            android:id="@+id/editText_invs_count"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+<!--     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textView_rp_inv"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="@string/write_passwd" />
+
+        <EditText
+            android:id="@+id/editText_rp_inv"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/VALUE_ZERO" />
+
+    </LinearLayout> -->
+
+    <TextView
+        android:id="@+id/textView_invs_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.28"
+        android:text="@string/TextView_Null" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn_invs_set"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.13"
+            android:text="@string/btn_set" />
+
+        <Button
+            android:id="@+id/btn_invs_cancle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.11"
+            android:text="@string/Cancle_btn" />
+    </LinearLayout>
+
+</LinearLayout>
