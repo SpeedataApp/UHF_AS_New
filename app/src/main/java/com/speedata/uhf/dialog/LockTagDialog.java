@@ -110,15 +110,20 @@ public class LockTagDialog extends Dialog implements
     public void onClick(View v) {
         // TODO Auto-generated method stub
         if (v == Ok) {
-            int area_nr = area.getSelectedItemPosition();
-            int style_nr = style.getSelectedItemPosition();
-            String ps = passwd.getText().toString();
+            final int area_nr = area.getSelectedItemPosition();
+            final int style_nr = style.getSelectedItemPosition();
+            final String ps = passwd.getText().toString();
 
             Status.setText("正在锁卡中....");
-            int reval = iuhfService.newSetLock(style_nr, area_nr, ps);
-            if (reval != 0) {
-                Status.setText("参数不正确");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int reval = iuhfService.newSetLock(style_nr, area_nr, ps);
+                    if (reval != 0) {
+                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                    }
+                }
+            }).start();
         } else if (v == Cancle) {
             dismiss();
         }

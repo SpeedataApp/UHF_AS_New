@@ -99,7 +99,7 @@ public class SetEPCDialog extends Dialog implements
                 Toast.makeText(mContext, "参数不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            byte[] write = StringUtils.stringToByte(epc_str);
+            final byte[] write = StringUtils.stringToByte(epc_str);
             final int epcl;
             try {
                 epcl = Integer.parseInt(count_str, 10);
@@ -108,10 +108,15 @@ public class SetEPCDialog extends Dialog implements
             }
             Status.setText("正在写卡中....");
             isSuccess = false;
-            int writeArea = iuhfService.newWriteArea(1, 2, epcl, password, write);
-            if (writeArea != 0) {
-                Status.setText("参数不正确");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int writeArea = iuhfService.newWriteArea(1, 2, epcl, password, write);
+                    if (writeArea != 0) {
+                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                    }
+                }
+            }).start();
 
         } else if (v == Cancle) {
             dismiss();

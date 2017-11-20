@@ -108,15 +108,20 @@ public class WriteTagDialog extends Dialog implements
                 Toast.makeText(mContext, "参数不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            byte[] write = StringUtils.stringToByte(str_content);
-            int addr = Integer.parseInt(str_addr);
-            int count = Integer.parseInt(str_count);
+            final byte[] write = StringUtils.stringToByte(str_content);
+            final int addr = Integer.parseInt(str_addr);
+            final int count = Integer.parseInt(str_count);
             Status.setText("正在写卡中....");
             isSuccess = false;
-            int writeArea = iuhfService.newWriteArea(which_choose, addr, count, str_passwd, write);
-            if (writeArea != 0) {
-                Status.setText("参数不正确");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int writeArea = iuhfService.newWriteArea(which_choose, addr, count, str_passwd, write);
+                    if (writeArea != 0) {
+                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                    }
+                }
+            }).start();
 
 //            int rev = iuhfService.write_area(which_choose, str_addr, str_passwd, str_count
 //                    , str_content);

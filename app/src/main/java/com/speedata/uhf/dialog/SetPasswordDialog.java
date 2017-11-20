@@ -113,10 +113,15 @@ public class SetPasswordDialog extends Dialog implements
             final int which = area_select.getSelectedItemPosition();
             Status.setText("正在修改密码中....");
             isSuccess = false;
-            int newSetPassword = iuhfService.newSetPassword(which, cur_pass, new_pass);
-            if (newSetPassword != 0) {
-                Status.setText("参数不正确");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int newSetPassword = iuhfService.newSetPassword(which, cur_pass, new_pass);
+                    if (newSetPassword != 0) {
+                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                    }
+                }
+            }).start();
         } else if (v == Cancle) {
             dismiss();
         }

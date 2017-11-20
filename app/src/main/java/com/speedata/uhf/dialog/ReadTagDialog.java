@@ -99,13 +99,18 @@ public class ReadTagDialog extends Dialog implements
                 Toast.makeText(mContext, "参数不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            int addr = Integer.parseInt(str_addr);
-            int count = Integer.parseInt(str_count);
+            final int addr = Integer.parseInt(str_addr);
+            final int count = Integer.parseInt(str_count);
             Status.setText("正在读卡中....");
-            int readArea = iuhfService.newReadArea(which_choose, addr, count, str_passwd);
-            if (readArea != 0) {
-                Status.setText("参数错误");
-            }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int readArea = iuhfService.newReadArea(which_choose, addr, count, str_passwd);
+                    if (readArea != 0) {
+                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                    }
+                }
+            }).start();
 
         } else if (v == Cancle) {
             dismiss();
