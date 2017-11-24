@@ -7,7 +7,7 @@
 ```
  dependencies {
     compile 'com.speedata:deivice:+'
-    compile 'com.speedata:libuhf:7.4'
+    compile 'com.speedata:libuhf:7.4.2'
   }
 ```
 

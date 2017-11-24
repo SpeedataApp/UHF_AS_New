@@ -161,7 +161,9 @@ public class SearchTagDialog extends Dialog implements
                 inSearch = true;
                 this.setCancelable(false);
                 scant = 0;
+                //取消掩码
                 iuhfService.select_card(1, "", false);
+                EventBus.getDefault().post(new MsgEvent("CancelSelectCard",""));
                 iuhfService.newInventoryStart();
                 Action.setText(R.string.Stop_Search_Btn);
                 Cancle.setEnabled(false);

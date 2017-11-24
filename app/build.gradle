@@ -29,5 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.speedata:deivice:+'
-    compile 'com.speedata:libuhf:7.4'
+    compile 'com.speedata:libuhf:7.4.2'
 }

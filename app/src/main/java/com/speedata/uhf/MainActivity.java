@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements OnClickListener {
         try {
             if (iuhfService != null) {
                 iuhfService.CloseDev();
-                //断点后选卡操作会失效，需要重新选卡（掩码）
+                //断电后选卡操作会失效，需要重新选卡（掩码）
                 current_tag_epc = null;
                 Cur_Tag_Info.setText("");
             }
@@ -133,6 +133,12 @@ public class MainActivity extends Activity implements OnClickListener {
             MainActivity.this.Status
                     .setText(R.string.Status_Write_Card_Ok);
         }
+        if (type.equals("CancelSelectCard")){
+            //断电后选卡操作会失效，需要重新选卡（掩码）
+            current_tag_epc = null;
+            Cur_Tag_Info.setText("");
+        }
+
     }
 
     private void newWakeLock() {
