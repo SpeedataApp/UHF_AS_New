@@ -85,9 +85,9 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
         int curmode = iuhfService.GetInvMode(FLX.InvModeType);
         int curaddr = iuhfService.GetInvMode(FLX.InvAddrType);
         int cursize = iuhfService.GetInvMode(FLX.InvSizeType);
-        addr.setText(String.format("%x", curaddr));
-        size.setText(String.format("%d", cursize));
-        mode.setSelection(curmode - 1);
+        addr.setText(curaddr + "");
+        size.setText(cursize + "");
+        mode.setSelection(curmode);
         Log.e("r2000_native", "oncreate over");
     }
 
@@ -102,8 +102,8 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
             String saddr = addr.getText().toString();
             String ssize = size.getText().toString();
             try {
-                caddr = Integer.parseInt(saddr, 16);
-                csize = Integer.parseInt(ssize, 10);
+                caddr = Integer.parseInt(saddr);
+                csize = Integer.parseInt(ssize);
                 if (csize == 0)
                     throw new NumberFormatException("size cannot be 0");
 
