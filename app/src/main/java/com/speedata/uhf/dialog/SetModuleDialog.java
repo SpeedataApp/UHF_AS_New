@@ -45,6 +45,10 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
     private Button button_zaibo;
     private LinearLayout ll_zaibo;
 
+    private Button btnSetSession, btnGetSession;
+    private Spinner session;
+    private final String[] sessionItem = {"s0", "s1", "s2", "s3"};
+
 
     public SetModuleDialog(Context context, IUHFService iuhfService, String model) {
         super(context);
@@ -57,6 +61,10 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_setting);
         initView();
+
+        ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(this.getContext(),
+                android.R.layout.simple_spinner_item, sessionItem);
+        session.setAdapter(sessionAdapter);
 
         ArrayAdapter<String> tmp;
         if ("r2k".equals(model)) {
@@ -115,6 +123,8 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             pv.setHint("0关天线1开天线");
             setp.setEnabled(true);
         }
+
+        getSession();
     }
 
     private void initView() {
@@ -136,6 +146,12 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         button_zaibo.setOnClickListener(this);
         et_zaibo = (EditText) findViewById(R.id.et_zaibo);
         ll_zaibo = (LinearLayout) findViewById(R.id.ll_zaibo);
+        //session
+        btnGetSession = (Button) findViewById(R.id.button_get_session);
+        btnGetSession.setOnClickListener(this);
+        btnSetSession = (Button) findViewById(R.id.button_set_session);
+        btnSetSession.setOnClickListener(this);
+        session = (Spinner) findViewById(R.id.spinner_session);
     }
 
     @Override
@@ -190,6 +206,25 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             } else {
                 status.setText("Set carrier failed");
             }
+        } else if (v == btnGetSession) {
+            getSession();
+        } else if (v == btnSetSession) {
+            int setQueryTagGroup = iuhfService.setQueryTagGroup(0, (int) session.getSelectedItemId(), 0);
+            if (setQueryTagGroup == 0) {
+                status.setText("Set success");
+            } else {
+                status.setText("Set failed:" + setQueryTagGroup);
+            }
+        }
+    }
+
+    private void getSession() {
+        int queryTagGroup = iuhfService.getQueryTagGroup();
+        if (queryTagGroup != -1) {
+            session.setSelection(queryTagGroup);
+            status.setText("Get success");
+        } else {
+            status.setText("Get failed");
         }
     }
 
