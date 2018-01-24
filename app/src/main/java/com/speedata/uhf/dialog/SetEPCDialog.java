@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -106,14 +107,15 @@ public class SetEPCDialog extends Dialog implements
             } catch (NumberFormatException e) {
                 return;
             }
+
             Status.setText("正在写卡中....");
             isSuccess = false;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int writeArea = iuhfService.newWriteArea(1, 2, epcl, password, write);
+                    int writeArea = set_EPC(epcl, password, write);
                     if (writeArea != 0) {
-                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                        handler.sendMessage(handler.obtainMessage(1, "参数不正确"));
                     }
                 }
             }).start();
@@ -122,6 +124,32 @@ public class SetEPCDialog extends Dialog implements
             dismiss();
         }
     }
+
+    int set_EPC(int epclength, String passwd, byte[] EPC) {
+        byte[] res;
+        if (epclength > 31) {
+            return -3;
+        }
+        if (epclength * 2 < EPC.length) {
+            return -3;
+        }
+        res = iuhfService.read_area(iuhfService.EPC_A, 1, 1, passwd);
+        if (res == null) {
+            return -5;
+        }
+        res[0] = (byte) ((res[0] & 0x7) | (epclength << 3));
+        byte[] f = new byte[2 + epclength * 2];
+        try {
+            System.arraycopy(res, 0, f, 0, 2);
+            System.arraycopy(EPC, 0, f, 2, epclength * 2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        SystemClock.sleep(500);
+        return iuhfService.newWriteArea(iuhfService.EPC_A, 1, f.length / 2, passwd, f);
+    }
+
 
     Handler handler = new Handler() {
         @Override
