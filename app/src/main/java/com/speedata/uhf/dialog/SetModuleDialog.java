@@ -44,6 +44,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
     private EditText et_zaibo;
     private Button button_zaibo;
     private LinearLayout ll_zaibo;
+    private LinearLayout ll_session;
 
     private Button btnSetSession, btnGetSession;
     private Spinner session;
@@ -80,6 +81,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
 
         int re = iuhfService.get_freq_region();
         if ("r2k".equals(model)) {
+            ll_session.setVisibility(View.VISIBLE);
             if (re == iuhfService.REGION_CHINA_920_925) {
                 lf.setSelection(1, true);
             } else if (re == iuhfService.REGION_CHINA_840_845) {
@@ -146,6 +148,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         button_zaibo.setOnClickListener(this);
         et_zaibo = (EditText) findViewById(R.id.et_zaibo);
         ll_zaibo = (LinearLayout) findViewById(R.id.ll_zaibo);
+        ll_session= (LinearLayout) findViewById(R.id.ll_session);
         //session
         btnGetSession = (Button) findViewById(R.id.button_get_session);
         btnGetSession.setOnClickListener(this);

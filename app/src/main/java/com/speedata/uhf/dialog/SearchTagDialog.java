@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.speedata.libuhf.IUHFService;
 import com.speedata.libuhf.bean.SpdInventoryData;
 import com.speedata.libuhf.interfaces.OnSpdInventoryListener;
+import com.speedata.libuhf.utils.SharedXmlUtil;
 import com.speedata.uhf.MsgEvent;
 import com.speedata.uhf.R;
 
@@ -163,7 +164,7 @@ public class SearchTagDialog extends Dialog implements
                 scant = 0;
                 //取消掩码
                 iuhfService.select_card(1, "", false);
-                EventBus.getDefault().post(new MsgEvent("CancelSelectCard",""));
+                EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
                 iuhfService.newInventoryStart();
                 Action.setText(R.string.Stop_Search_Btn);
                 Cancle.setEnabled(false);
@@ -216,6 +217,10 @@ public class SearchTagDialog extends Dialog implements
         }
 
         String epcStr = firm.get(arg2).epc;
+        boolean u8 = SharedXmlUtil.getInstance(cont).read("U8", false);
+        if (u8) {
+            epcStr = epcStr.substring(0, 24);
+        }
         int res = iuhfService.select_card(1, epcStr, true);
         if (res == 0) {
             EventBus.getDefault().post(new MsgEvent("set_current_tag_epc", epcStr));

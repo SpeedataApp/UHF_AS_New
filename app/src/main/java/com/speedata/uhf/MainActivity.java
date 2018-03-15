@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.speedata.libuhf.IUHFService;
 import com.speedata.libuhf.UHFManager;
+import com.speedata.libuhf.utils.CommonUtils;
 import com.speedata.libuhf.utils.SharedXmlUtil;
-import com.speedata.libutils.CommonUtils;
 import com.speedata.uhf.dialog.InvSetDialog;
 import com.speedata.uhf.dialog.LockTagDialog;
 import com.speedata.uhf.dialog.ReadTagDialog;
@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements OnClickListener {
             MainActivity.this.Status
                     .setText(R.string.Status_Write_Card_Ok);
         }
-        if (type.equals("CancelSelectCard")){
+        if (type.equals("CancelSelectCard")) {
             //断点后选卡操作会失效，需要重新选卡（掩码）
             current_tag_epc = null;
             Cur_Tag_Info.setText("");
@@ -215,6 +215,7 @@ public class MainActivity extends Activity implements OnClickListener {
         Set_Password.setEnabled(false);
         Lock_Tag.setEnabled(false);
         Area_Select.setEnabled(false);
+
     }
 
 

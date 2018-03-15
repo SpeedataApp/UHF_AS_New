@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.speedata.libuhf.FLX;
 import com.speedata.libuhf.IUHFService;
+import com.speedata.libuhf.utils.SharedXmlUtil;
+import com.speedata.libuhf.utils.StringUtils;
 import com.speedata.uhf.R;
 
 /**
@@ -26,13 +28,15 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
     private Spinner mode;
     private EditText addr, size;
     private TextView status;
-    private String[] slist = {"Only EPC", "EPC + TID", "EPC + USER"};
+    private String[] slist = {"Only EPC", "EPC + TID", "EPC + USER", "EPC+BID", "EPC+BID+TID"};
     private ArrayAdapter<String> iapt;
     private IUHFService iuhfService;
+    private Context context;
 
     public InvSetDialog(Context context, IUHFService iuhfService) {
         super(context);
         this.iuhfService = iuhfService;
+        this.context = context;
         // TODO Auto-generated constructor stub
     }
 
@@ -64,7 +68,7 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 // TODO Auto-generated method stub
-                if (position == 0) {
+                if (position == 0 || position == 3 || position == 4) {
                     addr.setEnabled(false);
                     size.setEnabled(false);
                 } else {
@@ -97,22 +101,37 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
         if (v == ok) {
             int w = mode.getSelectedItemPosition();
             Log.w("r2000_native", "select item " + w);
+            if (w == 3) {
+                //读取U8标签代码epc+bid
+                iuhfService.Mask(1, 516, 1, StringUtils.stringToByte("80"));
+                SharedXmlUtil.getInstance(context).write("U8", true);
+            } else if (w == 4) {
+                //读取U8标签代码epc+bid+tid
+                iuhfService.Mask(1, 516, 1, StringUtils.stringToByte("80"));
+                iuhfService.SetInvMode(1, 0, 6);
+                SharedXmlUtil.getInstance(context).write("U8", true);
+            } else {
+                iuhfService.cancelMask();
+                SharedXmlUtil.getInstance(context).write("U8", false);
+                int caddr = 0, csize = 0;
+                String saddr = addr.getText().toString();
+                String ssize = size.getText().toString();
+                if (w != 0) {
+                    try {
+                        caddr = Integer.parseInt(saddr);
+                        csize = Integer.parseInt(ssize);
+                        if (csize == 0)
+                            throw new NumberFormatException("size cannot be 0");
 
-            int caddr, csize;
-            String saddr = addr.getText().toString();
-            String ssize = size.getText().toString();
-            try {
-                caddr = Integer.parseInt(saddr);
-                csize = Integer.parseInt(ssize);
-                if (csize == 0)
-                    throw new NumberFormatException("size cannot be 0");
-
-            } catch (NumberFormatException p) {
-                status.setText(R.string.Status_InvalidNumber);
-                status.append("\n" + p.getMessage());
-                return;
+                    } catch (NumberFormatException p) {
+                        status.setText(R.string.Status_InvalidNumber);
+                        status.append("\n" + p.getMessage());
+                        return;
+                    }
+                }
+                iuhfService.SetInvMode(w, caddr, csize);
             }
-            iuhfService.SetInvMode(w, caddr, csize);
+
             dismiss();
         } else if (v == cancel) {
             dismiss();
