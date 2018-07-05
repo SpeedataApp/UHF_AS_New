@@ -6,7 +6,7 @@
 
 ```
  dependencies {
-    compile 'com.speedata:libuhf:7.5.4'
+    compile 'com.speedata:libuhf:7.6'
   }
 ```
 
