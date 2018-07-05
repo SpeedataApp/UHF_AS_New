@@ -4,10 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,6 +16,7 @@ import java.io.IOException;
 
 public class MyApp extends Application {
     private static MyApp m_application; // 单例
+
 
     public static MyApp getInstance() {
         return m_application;
@@ -38,7 +37,9 @@ public class MyApp extends Application {
         strategy.setUploadProcess(processName == null || processName.equals(packageName));
         // 初始化Bugly
         Bugly.init(getApplicationContext(), "75242a29e5", true, strategy);
+
     }
+
 
     /**
      * 获取进程号对应的进程名

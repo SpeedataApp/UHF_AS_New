@@ -93,4 +93,6 @@
     <string name="inv_set">Inv\nSet</string>
     <string name="spinner_area_text">Read\Write Area</string>
     <string name="write_content">Content(hex)</string>
+    <string name="pindian">FrequencyPoint:</string>
+    <string name="btn_export">Export</string>
 </resources>

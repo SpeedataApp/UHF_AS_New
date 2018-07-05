@@ -79,7 +79,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         tmp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         lf.setAdapter(tmp);
 
-        int re = iuhfService.get_freq_region();
+        int re = iuhfService.getFreqRegion();
         if ("r2k".equals(model)) {
             ll_session.setVisibility(View.VISIBLE);
             if (re == iuhfService.REGION_CHINA_920_925) {
@@ -116,7 +116,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         }
 
 
-        int ivp = iuhfService.get_antenna_power();
+        int ivp = iuhfService.getAntennaPower();
         if (ivp > 0) {
             setp.setEnabled(true);
             pv.setText("" + ivp);
@@ -165,7 +165,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             if (freq_region >= 4) {
                 status.setText("Invalid select");
             } else {
-                if (iuhfService.set_freq_region(freq_region) < 0) {
+                if (iuhfService.setFreqRegion(freq_region) < 0) {
                     status.setText("set freq region failed");
                 } else {
                     status.setText("set freq region ok");
@@ -182,7 +182,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             if ((ivp < 0) || (ivp > 30)) {
                 status.setText("value range is 0 ~ 30");
             } else {
-                int rv = iuhfService.set_antenna_power(ivp);
+                int rv = iuhfService.setAntennaPower(ivp);
                 if (rv < 0) {
                     status.setText("set antenna power failed");
                 } else {

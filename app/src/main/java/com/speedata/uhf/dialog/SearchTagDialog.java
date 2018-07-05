@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -16,18 +17,25 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.speedata.libuhf.IUHFService;
 import com.speedata.libuhf.bean.SpdInventoryData;
 import com.speedata.libuhf.interfaces.OnSpdInventoryListener;
 import com.speedata.libuhf.utils.SharedXmlUtil;
 import com.speedata.uhf.MsgEvent;
 import com.speedata.uhf.R;
+import com.speedata.uhf.excel.EPCBean;
+import com.speedata.uhf.libutils.excel.ExcelUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import jxl.write.Colour;
 
 /**
  * Created by 张明_ on 2016/12/28.
@@ -50,6 +58,8 @@ public class SearchTagDialog extends Dialog implements
     private CheckBox cbb;
     private IUHFService iuhfService;
     private String model;
+    private Button export;
+    private KProgressHUD kProgressHUD;
 
     public SearchTagDialog(Context context, IUHFService iuhfService, String model) {
         super(context);
@@ -69,6 +79,8 @@ public class SearchTagDialog extends Dialog implements
         Action = (Button) findViewById(R.id.btn_search_action);
         Action.setOnClickListener(this);
 
+        export = (Button) findViewById(R.id.btn_export);
+        export.setOnClickListener(this);
         cbb = (CheckBox) findViewById(R.id.checkBox_beep);
 
         Status = (TextView) findViewById(R.id.textView_search_status);
@@ -129,6 +141,16 @@ public class SearchTagDialog extends Dialog implements
                     adapter.notifyDataSetChanged();
                     Status.setText("Total: " + firm.size());
                     break;
+
+                case 2:
+                    kProgressHUD.dismiss();
+                    Toast.makeText(cont, "导出完成", Toast.LENGTH_SHORT).show();
+                    break;
+
+                case 3:
+                    kProgressHUD.dismiss();
+                    Toast.makeText(cont, "导出过程中出现问题！请重试", Toast.LENGTH_SHORT).show();
+                    break;
             }
 
         }
@@ -138,7 +160,7 @@ public class SearchTagDialog extends Dialog implements
     protected void onStop() {
         Log.w("stop", "im stopping");
         if (inSearch) {
-            iuhfService.newInventoryStop();
+            iuhfService.inventoryStop();
             inSearch = false;
         }
         soundPool.release();
@@ -154,21 +176,65 @@ public class SearchTagDialog extends Dialog implements
             if (inSearch) {
                 inSearch = false;
                 this.setCancelable(true);
-                iuhfService.newInventoryStop();
+                iuhfService.inventoryStop();
 
                 Action.setText(R.string.Start_Search_Btn);
                 Cancle.setEnabled(true);
+                export.setEnabled(true);
             } else {
                 inSearch = true;
                 this.setCancelable(false);
                 scant = 0;
                 //取消掩码
-                iuhfService.select_card(1, "", false);
+                iuhfService.selectCard(1, "", false);
                 EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
-                iuhfService.newInventoryStart();
+                iuhfService.inventoryStart();
                 Action.setText(R.string.Stop_Search_Btn);
                 Cancle.setEnabled(false);
+                export.setEnabled(false);
             }
+        } else if (v == export) {
+            kProgressHUD = KProgressHUD.create(cont)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(false)
+                    .setAnimationSpeed(2)
+                    .setDimAmount(0.5f)
+                    .show();
+            if (firm.size() > 0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<EPCBean> epcBeanList = new ArrayList<EPCBean>();
+                        for (EpcDataBase epcDataBase : firm) {
+                            EPCBean epcBean = new EPCBean();
+                            epcBean.setEPC(epcDataBase.epc);
+                            epcBean.setTID_USER(epcDataBase.tid_user);
+                            epcBeanList.add(epcBean);
+                        }
+                        try {
+                            ExcelUtils.getInstance()
+                                    .setSHEET_NAME("UHFMsg")//设置表格名称
+                                    .setFONT_COLOR(Colour.BLUE)//设置标题字体颜色
+                                    .setFONT_TIMES(8)//设置标题字体大小
+                                    .setFONT_BOLD(true)//设置标题字体是否斜体
+                                    .setBACKGROND_COLOR(Colour.GRAY_25)//设置标题背景颜色
+                                    .setContent_list_Strings(epcBeanList)//设置excel内容
+                                    .setWirteExcelPath(Environment.getExternalStorageDirectory() + File.separator + "UHFMsg.xls")
+                                    .createExcel(cont);
+                            handler.sendMessage(handler.obtainMessage(2));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            handler.sendMessage(handler.obtainMessage(3));
+                        }
+
+
+                    }
+                }).start();
+            } else {
+                kProgressHUD.dismiss();
+                Toast.makeText(cont, "没有数据，请先盘点", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -221,7 +287,7 @@ public class SearchTagDialog extends Dialog implements
         if (u8) {
             epcStr = epcStr.substring(0, 24);
         }
-        int res = iuhfService.select_card(1, epcStr, true);
+        int res = iuhfService.selectCard(1, epcStr, true);
         if (res == 0) {
             EventBus.getDefault().post(new MsgEvent("set_current_tag_epc", epcStr));
             dismiss();

@@ -86,9 +86,9 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
 
         });
 
-        int curmode = iuhfService.GetInvMode(FLX.InvModeType);
-        int curaddr = iuhfService.GetInvMode(FLX.InvAddrType);
-        int cursize = iuhfService.GetInvMode(FLX.InvSizeType);
+        int curmode = iuhfService.getInvMode(FLX.InvModeType);
+        int curaddr = iuhfService.getInvMode(FLX.InvAddrType);
+        int cursize = iuhfService.getInvMode(FLX.InvSizeType);
         addr.setText(curaddr + "");
         size.setText(cursize + "");
         mode.setSelection(curmode);
@@ -103,12 +103,12 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
             Log.w("r2000_native", "select item " + w);
             if (w == 3) {
                 //读取U8标签代码epc+bid
-                iuhfService.Mask(1, 516, 1, StringUtils.stringToByte("80"));
+                iuhfService.mask(1, 516, 1, StringUtils.stringToByte("80"));
                 SharedXmlUtil.getInstance(context).write("U8", true);
             } else if (w == 4) {
                 //读取U8标签代码epc+bid+tid
-                iuhfService.Mask(1, 516, 1, StringUtils.stringToByte("80"));
-                iuhfService.SetInvMode(1, 0, 6);
+                iuhfService.mask(1, 516, 1, StringUtils.stringToByte("80"));
+                iuhfService.setInvMode(1, 0, 6);
                 SharedXmlUtil.getInstance(context).write("U8", true);
             } else {
                 iuhfService.cancelMask();
@@ -129,7 +129,7 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
                         return;
                     }
                 }
-                iuhfService.SetInvMode(w, caddr, csize);
+                iuhfService.setInvMode(w, caddr, csize);
             }
 
             dismiss();

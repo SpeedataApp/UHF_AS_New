@@ -147,7 +147,7 @@ public class SetEPCDialog extends Dialog implements
             return -1;
         }
         SystemClock.sleep(500);
-        return iuhfService.newWriteArea(iuhfService.EPC_A, 1, f.length / 2, passwd, f);
+        return iuhfService.writeArea(iuhfService.EPC_A, 1, f.length / 2, passwd, f);
     }
 
 

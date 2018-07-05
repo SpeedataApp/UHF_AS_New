@@ -93,4 +93,6 @@
     <string name="inv_set">盘点内容设置</string>
     <string name="spinner_area_text">读写操作区域</string>
     <string name="write_content">内容(hex)</string>
+    <string name="pindian">频点:</string>
+    <string name="btn_export">导出</string>
 </resources>

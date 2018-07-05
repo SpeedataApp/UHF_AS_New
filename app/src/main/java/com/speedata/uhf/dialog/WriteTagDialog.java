@@ -116,7 +116,7 @@ public class WriteTagDialog extends Dialog implements
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int writeArea = iuhfService.newWriteArea(which_choose, addr, count, str_passwd, write);
+                    int writeArea = iuhfService.writeArea(which_choose, addr, count, str_passwd, write);
                     if (writeArea != 0) {
                         handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
                     }

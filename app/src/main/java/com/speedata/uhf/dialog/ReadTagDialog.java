@@ -105,7 +105,7 @@ public class ReadTagDialog extends Dialog implements
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int readArea = iuhfService.newReadArea(which_choose, addr, count, str_passwd);
+                    int readArea = iuhfService.readArea(which_choose, addr, count, str_passwd);
                     if (readArea != 0) {
                         handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
                     }

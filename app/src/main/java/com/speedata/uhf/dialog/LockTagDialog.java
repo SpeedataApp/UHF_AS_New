@@ -118,7 +118,7 @@ public class LockTagDialog extends Dialog implements
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int reval = iuhfService.newSetLock(style_nr, area_nr, ps);
+                    int reval = iuhfService.setLock(style_nr, area_nr, ps);
                     if (reval != 0) {
                         handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
                     }
