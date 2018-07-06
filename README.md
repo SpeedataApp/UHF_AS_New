@@ -12,7 +12,7 @@
 
 API文档
 
-	详细的接口说明在showdoc，地址：http://www.showdoc.cc/11073?page_id=90826
+	详细的接口说明在showdoc，地址：http://www.showdoc.cc/web/#/79868361520440
 
 北京思必拓科技股份有限公司
 
