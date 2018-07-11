@@ -62,7 +62,12 @@ public class MainActivity extends Activity implements OnClickListener {
             iuhfService = UHFManager.getUHFService(MainActivity.this);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, "模块不存在", Toast.LENGTH_SHORT).show();
+            boolean cn = getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+            if (cn) {
+                Toast.makeText(getApplicationContext(), "模块不存在", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Module does not exist", Toast.LENGTH_SHORT).show();
+            }
             return;
         }
 //        UHFManager.unregisterReceiver();
@@ -131,7 +136,7 @@ public class MainActivity extends Activity implements OnClickListener {
         }
         if (type.equals("lock_Status")) {
             MainActivity.this.Status
-                    .setText("设置成功");
+                    .setText(R.string.set_success);
         }
         if (type.equals("SetEPC_Status")) {
             MainActivity.this.Status
@@ -326,7 +331,12 @@ public class MainActivity extends Activity implements OnClickListener {
             case KeyEvent.ACTION_DOWN:
                 if ((System.currentTimeMillis() - mkeyTime) > 2000) {
                     mkeyTime = System.currentTimeMillis();
-                    Toast.makeText(MainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                    boolean cn = getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+                    if (cn) {
+                        Toast.makeText(getApplicationContext(), "再按一次退出", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Click again to exit", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     try {
                         finish();

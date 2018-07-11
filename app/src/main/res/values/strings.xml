@@ -95,4 +95,5 @@
     <string name="write_content">Content(hex)</string>
     <string name="pindian">FrequencyPoint:</string>
     <string name="btn_export">Export</string>
+    <string name="set_success">Setting Success</string>
 </resources>

@@ -114,6 +114,7 @@ public class SearchTagDialog extends Dialog implements
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            boolean cn = cont.getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
             switch (msg.what) {
                 case 1:
                     scant++;
@@ -144,12 +145,20 @@ public class SearchTagDialog extends Dialog implements
 
                 case 2:
                     kProgressHUD.dismiss();
-                    Toast.makeText(cont, "导出完成", Toast.LENGTH_SHORT).show();
+                    if (cn) {
+                        Toast.makeText(cont, "导出完成", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(cont, "Export the complete", Toast.LENGTH_SHORT).show();
+                    }
                     break;
 
                 case 3:
                     kProgressHUD.dismiss();
-                    Toast.makeText(cont, "导出过程中出现问题！请重试", Toast.LENGTH_SHORT).show();
+                    if (cn) {
+                        Toast.makeText(cont, "导出过程中出现问题！请重试", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(cont, "There is a problem in exporting! Please try again", Toast.LENGTH_SHORT).show();
+                    }
                     break;
             }
 
@@ -232,7 +241,12 @@ public class SearchTagDialog extends Dialog implements
                 }).start();
             } else {
                 kProgressHUD.dismiss();
-                Toast.makeText(cont, "没有数据，请先盘点", Toast.LENGTH_SHORT).show();
+                boolean cn = cont.getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+                if (cn) {
+                    Toast.makeText(cont, "没有数据，请先盘点", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(cont, "No data, please take stock", Toast.LENGTH_SHORT).show();
+                }
             }
 
         }

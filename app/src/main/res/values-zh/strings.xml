@@ -95,4 +95,5 @@
     <string name="write_content">内容(hex)</string>
     <string name="pindian">频点:</string>
     <string name="btn_export">导出</string>
+    <string name="set_success">设置成功</string>
 </resources>
