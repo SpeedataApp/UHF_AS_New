@@ -1,6 +1,7 @@
 package com.speedata.uhf.libutils;
 
-import android.serialport.DeviceControl;
+
+import android.serialport.UHFDeviceControl;
 
 /**
  * ----------Dragon be here!----------/
@@ -59,22 +60,22 @@ class DeviceType {
      *
      * @return PowerType
      */
-    static DeviceControl.PowerType getPowerType() {
+    static UHFDeviceControl.PowerType getPowerType() {
         switch (android.os.Build.MODEL) {
             case "kt45":
-                return DeviceControl.PowerType.MAIN;
+                return UHFDeviceControl.PowerType.MAIN;
             case "kt45q":
-                return DeviceControl.PowerType.MAIN;
+                return UHFDeviceControl.PowerType.MAIN;
             case "KT50":
-                return DeviceControl.PowerType.MAIN;
+                return UHFDeviceControl.PowerType.MAIN;
             case "KT55":
-                return DeviceControl.PowerType.MAIN_AND_EXPAND;
+                return UHFDeviceControl.PowerType.MAIN_AND_EXPAND;
             case "KT50_B2":
-                return DeviceControl.PowerType.MAIN;
+                return UHFDeviceControl.PowerType.MAIN;
             default:
                 break;
         }
-        return DeviceControl.PowerType.MAIN;
+        return UHFDeviceControl.PowerType.MAIN;
     }
 
     /**
