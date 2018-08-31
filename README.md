@@ -6,13 +6,13 @@
 
 ```
  dependencies {
-    compile 'com.speedata:libuhf:7.6'
+    compile 'com.speedata:libuhf:7.6.4'
   }
 ```
 
 API文档
 
-	详细的接口说明在showdoc，地址：http://www.showdoc.cc/web/#/79868361520440
+	详细的接口说明在showdoc，地址：http://www.showdoc.cc/web/#/79868361520440?page_id=452063154391852
 
 北京思必拓科技股份有限公司
 
