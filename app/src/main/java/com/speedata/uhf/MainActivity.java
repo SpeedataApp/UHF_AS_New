@@ -18,8 +18,11 @@ import android.widget.Toast;
 
 import com.speedata.libuhf.IUHFService;
 import com.speedata.libuhf.UHFManager;
+import com.speedata.libuhf.bean.SpdInventoryData;
+import com.speedata.libuhf.interfaces.OnSpdInventoryListener;
 import com.speedata.libuhf.utils.CommonUtils;
 import com.speedata.libuhf.utils.SharedXmlUtil;
+import com.speedata.uhf.dialog.DirectionalTagDialog;
 import com.speedata.uhf.dialog.InvSetDialog;
 import com.speedata.uhf.dialog.LockTagDialog;
 import com.speedata.uhf.dialog.ReadTagDialog;
@@ -32,6 +35,11 @@ import com.speedata.uhf.dialog.WriteTagDialog;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainActivity extends Activity implements OnClickListener {
     private static final String[] list = {"Reserved", "EPC", "TID", "USER"};
     private TextView Cur_Tag_Info;
@@ -40,6 +48,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private ArrayAdapter<String> adapter;
     private Button Search_Tag;
     private Button Read_Tag;
+    private Button Directional_Tag;
     private Button Write_Tag;
     private Button Set_Tag;
     private Button Set_Password;
@@ -57,7 +66,8 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        SharedXmlUtil.getInstance(this).write("modle", "xinlian");
+        UHFManager.setStipulationLevel(0);
+//        SharedXmlUtil.getInstance(this).write("modle", "r2k");
         try {
             iuhfService = UHFManager.getUHFService(MainActivity.this);
         } catch (Exception e) {
@@ -70,7 +80,6 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             return;
         }
-//        UHFManager.unregisterReceiver();
         modle = SharedXmlUtil.getInstance(MainActivity.this).read("modle", "");
         initUI();
         Version.append("-" + modle);
@@ -89,9 +98,10 @@ public class MainActivity extends Activity implements OnClickListener {
             btn_inv_set.setEnabled(true);
         }
 
-
-        UHFManager.setStipulationLevel(0);
     }
+
+    private BufferedWriter CtrlFile;
+
 
     @Override
     protected void onResume() {
@@ -193,6 +203,8 @@ public class MainActivity extends Activity implements OnClickListener {
         Write_Tag.setOnClickListener(this);
         Read_Tag = (Button) findViewById(R.id.btn_read);
         Read_Tag.setOnClickListener(this);
+        Directional_Tag = (Button) findViewById(R.id.btn_direction);
+        Directional_Tag.setOnClickListener(this);
         Search_Tag = (Button) findViewById(R.id.btn_search);
         Search_Tag.setOnClickListener(this);
         Set_Tag = (Button) findViewById(R.id.btn_check);
@@ -270,19 +282,34 @@ public class MainActivity extends Activity implements OnClickListener {
             writeTag.show();
 
         } else if (arg0 == Search_Tag) {
-
+            int i = iuhfService.setQueryTagGroup(0, 0, 0);
+            if (i == 0) {
+                //设置通话项成功
+            }
+            i = iuhfService.setDynamicAlgorithm();
+            if (i == 0) {
+                //设置成功
+            }
             //盘点选卡
             SearchTagDialog searchTag = new SearchTagDialog(this, iuhfService, modle);
             searchTag.setTitle(R.string.Item_Choose);
             searchTag.show();
 
-        } else if (arg0 == Set_Tag) {
+        } else if (arg0 == Directional_Tag) {
+            //方向判断
+            DirectionalTagDialog directionalTagDialog = new DirectionalTagDialog(this, iuhfService);
+            directionalTagDialog.show();
+        } else if (arg0 == Set_Tag)
+
+        {
             //设置频率频段
             SetModuleDialog setDialog = new SetModuleDialog(this, iuhfService, modle);
             setDialog.setTitle(R.string.Item_Set_Title);
             setDialog.show();
 
-        } else if (arg0 == Set_Password) {
+        } else if (arg0 == Set_Password)
+
+        {
             if (current_tag_epc == null) {
                 Status.setText(R.string.Status_No_Card_Select);
                 Toast.makeText(this, R.string.Status_No_Card_Select, Toast.LENGTH_SHORT).show();
@@ -293,7 +320,9 @@ public class MainActivity extends Activity implements OnClickListener {
                     , iuhfService, current_tag_epc, modle);
             setPasswordDialog.setTitle(R.string.SetPasswd_Btn);
             setPasswordDialog.show();
-        } else if (arg0 == Set_EPC) {
+        } else if (arg0 == Set_EPC)
+
+        {
             if (current_tag_epc == null) {
                 Status.setText(R.string.Status_No_Card_Select);
                 Toast.makeText(this, R.string.Status_No_Card_Select, Toast.LENGTH_SHORT).show();
@@ -303,7 +332,9 @@ public class MainActivity extends Activity implements OnClickListener {
             SetEPCDialog setEPCDialog = new SetEPCDialog(this, iuhfService, current_tag_epc);
             setEPCDialog.setTitle(R.string.SetEPC_Btn);
             setEPCDialog.show();
-        } else if (arg0 == Lock_Tag) {
+        } else if (arg0 == Lock_Tag)
+
+        {
             if (current_tag_epc == null) {
                 Status.setText(R.string.Status_No_Card_Select);
                 Toast.makeText(this, R.string.Status_No_Card_Select, Toast.LENGTH_SHORT).show();
@@ -314,12 +345,15 @@ public class MainActivity extends Activity implements OnClickListener {
                     , current_tag_epc, modle);
             lockTagDialog.setTitle(R.string.Lock_Btn);
             lockTagDialog.show();
-        } else if (arg0 == btn_inv_set) {
+        } else if (arg0 == btn_inv_set)
+
+        {
             //盘点内容设置
             InvSetDialog invSetDialog = new InvSetDialog(this, iuhfService);
             invSetDialog.setTitle("Inv Set");
             invSetDialog.show();
         }
+
     }
 
     private long mkeyTime = 0;

@@ -5,8 +5,17 @@
 **AndroidStudio** build.gradle中的dependencies中添加
 
 ```
+//最外层build.gradle
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+```
  dependencies {
-    compile 'com.speedata:libuhf:7.6.4'
+    compile 'com.github.SpeedataG:UHF:7.6.9'
   }
 ```
 

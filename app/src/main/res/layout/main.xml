@@ -62,7 +62,7 @@
         android:id="@+id/btn_read"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:text="@string/Read_Btn_T" />
 
@@ -70,10 +70,16 @@
         android:id="@+id/btn_write"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:text="@string/Write_Btn_T" />
-
+    <Button
+        android:id="@+id/btn_direction"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="@string/Direction_Btn_T" />
 
     <LinearLayout
         android:id="@+id/linearLayout4"

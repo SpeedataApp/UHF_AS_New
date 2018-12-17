@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">uhf</string>
+    <string name="app_name">UHF</string>
 
     <string name="Search_Btn_T">选卡</string>
     <string name="Read_Btn_T">读</string>
     <string name="Write_Btn_T">写</string>
+    <string name="Direction_Btn_T">方向判断</string>
     <string name="Name_item">Current Card(by EPC):</string>
     <string name="read_addr">地址(hex)</string>
     <string name="read_count">块数</string>
@@ -96,4 +97,6 @@
     <string name="pindian">频点:</string>
     <string name="btn_export">导出</string>
     <string name="set_success">设置成功</string>
+    <string name="dialog_dir_epc">填入要寻找的EPC</string>
+    <string name="dialog_dir_seek">开始寻找</string>
 </resources>

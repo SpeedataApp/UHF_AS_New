@@ -148,7 +148,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         button_zaibo.setOnClickListener(this);
         et_zaibo = (EditText) findViewById(R.id.et_zaibo);
         ll_zaibo = (LinearLayout) findViewById(R.id.ll_zaibo);
-        ll_session= (LinearLayout) findViewById(R.id.ll_session);
+        ll_session = (LinearLayout) findViewById(R.id.ll_session);
         //session
         btnGetSession = (Button) findViewById(R.id.button_get_session);
         btnGetSession.setOnClickListener(this);
@@ -179,8 +179,8 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             dismiss();
         } else if (v == setp) {
             int ivp = Integer.parseInt(pv.getText().toString());
-            if ((ivp < 0) || (ivp > 30)) {
-                status.setText("value range is 0 ~ 30");
+            if ((ivp < 0) || (ivp > 33)) {
+                status.setText("value range is 0 ~ 33");
             } else {
                 int rv = iuhfService.setAntennaPower(ivp);
                 if (rv < 0) {

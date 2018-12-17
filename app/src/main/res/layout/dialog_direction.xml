@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_epc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/dialog_dir_epc" />
+
+        <Button
+            android:id="@+id/btn_search_action"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21"
+            android:text="@string/Start_Search_Btn" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView_search_epclist"
+        android:layout_width="match_parent"
+        android:layout_height="314dp"
+        android:layout_weight="0.08"></ListView>
+
+    <TextView
+        android:id="@+id/textView_search_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/TextView_Null" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btn_seek"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.19"
+            android:text="@string/dialog_dir_seek" />
+
+        <Button
+            android:id="@+id/btn_search_cancle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.19"
+            android:text="@string/Cancle_btn" />
+    </LinearLayout>
+
+</LinearLayout>
