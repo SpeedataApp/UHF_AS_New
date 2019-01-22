@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ import jxl.write.Colour;
  */
 
 public class SearchTagDialog extends Dialog implements
-        android.view.View.OnClickListener, AdapterView.OnItemClickListener {
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     private Button Cancle;
     private Button Action;
@@ -60,6 +61,12 @@ public class SearchTagDialog extends Dialog implements
     private String model;
     private Button export;
     private KProgressHUD kProgressHUD;
+    private LinearLayout showLayout;
+    private TextView tagNumTv;
+    private TextView speedTv;
+    private TextView totalTv;
+    private TextView totalTime;
+    private long startCheckingTime;//盘点命令下发后截取的系统时间
 
     public SearchTagDialog(Context context, IUHFService iuhfService, String model) {
         super(context);
@@ -74,6 +81,7 @@ public class SearchTagDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setreader);
 
+        initView();
         Cancle = (Button) findViewById(R.id.btn_search_cancle);
         Cancle.setOnClickListener(this);
         Action = (Button) findViewById(R.id.btn_search_action);
@@ -141,6 +149,7 @@ public class SearchTagDialog extends Dialog implements
                     }
                     adapter.notifyDataSetChanged();
                     Status.setText("Total: " + firm.size());
+                    UpdateRateCount();
                     break;
 
                 case 2:
@@ -186,7 +195,6 @@ public class SearchTagDialog extends Dialog implements
                 inSearch = false;
                 this.setCancelable(true);
                 iuhfService.inventoryStop();
-
                 Action.setText(R.string.Start_Search_Btn);
                 Cancle.setEnabled(true);
                 export.setEnabled(true);
@@ -194,10 +202,12 @@ public class SearchTagDialog extends Dialog implements
                 inSearch = true;
                 this.setCancelable(false);
                 scant = 0;
+                firm.clear();
                 //取消掩码
                 iuhfService.selectCard(1, "", false);
                 EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
                 iuhfService.inventoryStart();
+                startCheckingTime = System.currentTimeMillis();
                 Action.setText(R.string.Stop_Search_Btn);
                 Cancle.setEnabled(false);
                 export.setEnabled(false);
@@ -236,7 +246,7 @@ public class SearchTagDialog extends Dialog implements
                                 e.printStackTrace();
                                 handler.sendMessage(handler.obtainMessage(3));
                             }
-                        }else {
+                        } else {
                             handler.sendMessage(handler.obtainMessage(3));
                         }
 
@@ -254,6 +264,14 @@ public class SearchTagDialog extends Dialog implements
             }
 
         }
+    }
+
+    private void initView() {
+        showLayout = (LinearLayout) findViewById(R.id.show_layout);
+        tagNumTv = (TextView) findViewById(R.id.tagNum_tv);
+        speedTv = (TextView) findViewById(R.id.speed_tv);
+        totalTv = (TextView) findViewById(R.id.total_tv);
+        totalTime = (TextView) findViewById(R.id.totalTime);
     }
 
     class EpcDataBase {
@@ -312,5 +330,47 @@ public class SearchTagDialog extends Dialog implements
         } else {
             Status.setText(R.string.Status_Select_Card_Faild);
         }
+    }
+
+
+    private void UpdateRateCount() {
+
+        long m_lEndTime = System.currentTimeMillis();
+
+        double Rate = Math.ceil((scant * 1.0) * 1000 / (m_lEndTime - startCheckingTime));
+
+        long total_time_count = m_lEndTime - startCheckingTime;
+
+        speedTv.setText(String.format("%s次/秒", String.valueOf(Rate)));
+
+        tagNumTv.setText(String.format("%s个", String.valueOf(firm.size())));
+
+        totalTv.setText(String.format("%s次", String.valueOf(scant)));
+
+        totalTime.setText(String.valueOf(getTimeFromMillisecond(total_time_count)));
+
+
+    }
+
+    /**
+     * 从时间(毫秒)中提取出时间(时:分:秒)
+     * 时间格式:  时:分
+     *
+     * @param millisecond 毫秒
+     * @return 时间字符串
+     */
+    public static String getTimeFromMillisecond(Long millisecond) {
+        String milli;
+        long hours = millisecond / (60 * 60 * 1000); //根据时间差来计算小时数
+        long minutes = (millisecond - hours * (60 * 60 * 1000)) / (60 * 1000);   //根据时间差来计算分钟数
+        long second = (millisecond - hours * (60 * 60 * 1000) - minutes * (60 * 1000)) / 1000;   //根据时间差来计算秒数
+        long milliSecond = millisecond - hours * (60 * 60 * 1000) - minutes * (60 * 1000) - second * 1000;   //根据时间差来计算秒数
+        if (milliSecond < 100) {
+            milli = "0" + milliSecond;
+        } else {
+            milli = "" + milliSecond;
+        }
+
+        return hours + ": " + minutes + ": " + second + ":" + milli;
     }
 }
