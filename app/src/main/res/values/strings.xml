@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">UHF</string>
 
+    <string name="check_box_close">Exit  with close quick scan</string>
     <string name="Search_Btn_T">SEARCH</string>
     <string name="Read_Btn_T">READ</string>
     <string name="Write_Btn_T">WRITE</string>

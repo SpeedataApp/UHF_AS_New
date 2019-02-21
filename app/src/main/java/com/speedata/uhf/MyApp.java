@@ -2,8 +2,11 @@ package com.speedata.uhf;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.speedata.libuhf.IUHFService;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 import java.io.BufferedReader;
@@ -38,6 +41,7 @@ public class MyApp extends Application {
         // 初始化Bugly
         Bugly.init(getApplicationContext(), "75242a29e5", true, strategy);
 
+        startService(new Intent(this,MyService.class));
     }
 
 

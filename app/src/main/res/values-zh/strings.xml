@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">UHF</string>
 
+    <string name="check_box_close">退出时关闭焦点扫描EPC</string>
     <string name="Search_Btn_T">选卡</string>
     <string name="Read_Btn_T">读</string>
     <string name="Write_Btn_T">写</string>
