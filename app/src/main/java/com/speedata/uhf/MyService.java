@@ -45,7 +45,7 @@ public class MyService extends Service {
             Log.d(TAG, "===rece===action" + action);
             if (action.equals(SCAN)) {
                 //启动超高频扫描
-                if (!openDev()) {
+                if (openDev()) {
 
                     iuhfService.inventoryStart();
                     isScan = true;
@@ -58,8 +58,6 @@ public class MyService extends Service {
 
     public MyService() {
     }
-
-
 
 
     private UHFBinder mBinder = new UHFBinder();
@@ -101,6 +99,7 @@ public class MyService extends Service {
     }
 
     private void initUHF() {
+        Log.e(TAG, "initUHF");
         try {
             iuhfService = UHFManager.getUHFService(this);
         } catch (Exception e) {
@@ -167,11 +166,14 @@ public class MyService extends Service {
                         Log.d(TAG, "===openDev===失败" + i);
                     }
                 }).show();
-
+                isOpen = false;
+                return false;
+            } else {
+                Log.d(TAG, "===openDev===成功");
+                isOpen = true;
                 return true;
             }
-            Log.d(TAG, "===openDev===成功");
-            return false;
+
         } else {
             return true;
         }

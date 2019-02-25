@@ -30,12 +30,12 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     api 'com.android.support:appcompat-v7:23.4.0'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     api 'org.greenrobot:eventbus:3.0.0'
     //7.6.9
     api 'com.github.SpeedataG:UHF:7.7.4'
