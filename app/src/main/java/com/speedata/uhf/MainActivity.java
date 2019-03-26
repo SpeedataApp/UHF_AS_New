@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private PowerManager pM = null;
     private WakeLock wK = null;
     private int init_progress = 0;
-    private String modle;
+    private String model;
     private CheckBox checkBox;
     private BufferedWriter CtrlFile;
     private long mkeyTime = 0;
@@ -67,13 +67,12 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UHFManager.setStipulationLevel(0);
-        //        SharedXmlUtil.getInstance(this).write("modle", "r2k");
+        UHFManager.setStipulationLevel(20);
         try {
             iuhfService = UHFManager.getUHFService(MainActivity.this);
         } catch (Exception e) {
             e.printStackTrace();
-            boolean cn = getApplicationContext().getResources().getConfiguration().locale.getCountry().equals("CN");
+            boolean cn = "CN".equals(getApplicationContext().getResources().getConfiguration().locale.getCountry());
             if (cn) {
                 Toast.makeText(getApplicationContext(), "模块不存在", Toast.LENGTH_SHORT).show();
             } else {
@@ -81,9 +80,9 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             return;
         }
-        modle = SharedXmlUtil.getInstance(MainActivity.this).read("modle", "");
+        model = SharedXmlUtil.getInstance(MainActivity.this).read("model", "");
         initUI();
-        Version.append("-" + modle);
+        Version.append("-" + model);
         newWakeLock();
         EventBus.getDefault().register(this);
         Set_Tag.setEnabled(true);
@@ -94,15 +93,16 @@ public class MainActivity extends Activity implements OnClickListener {
         Set_Password.setEnabled(true);
         Lock_Tag.setEnabled(true);
         Area_Select.setEnabled(true);
-        if ("r2k".equals(modle)) {
+        if ("r2k".equals(model)) {
             btn_inv_set.setVisibility(View.VISIBLE);
             btn_inv_set.setEnabled(true);
         }
 
         sendUpddateService();
     }
-    private void sendUpddateService(){
-        Intent intent=new Intent();
+
+    private void sendUpddateService() {
+        Intent intent = new Intent();
         intent.setAction("uhf.update");
         sendBroadcast(intent);
     }
@@ -276,7 +276,7 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             //读卡
             ReadTagDialog readTag = new ReadTagDialog(this, iuhfService
-                    , Area_Select.getSelectedItemPosition(), current_tag_epc, modle);
+                    , Area_Select.getSelectedItemPosition(), current_tag_epc, model);
             readTag.setTitle(R.string.Item_Read);
             readTag.show();
 
@@ -289,7 +289,7 @@ public class MainActivity extends Activity implements OnClickListener {
             //写卡
             WriteTagDialog writeTag = new WriteTagDialog(this, iuhfService,
                     Area_Select.getSelectedItemPosition()
-                    , current_tag_epc, modle);
+                    , current_tag_epc, model);
             writeTag.setTitle(R.string.Item_Write);
             writeTag.show();
 
@@ -303,7 +303,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 //设置成功
             }
             //盘点选卡
-            SearchTagDialog searchTag = new SearchTagDialog(this, iuhfService, modle);
+            SearchTagDialog searchTag = new SearchTagDialog(this, iuhfService, model);
             searchTag.setTitle(R.string.Item_Choose);
             searchTag.show();
 
@@ -313,7 +313,7 @@ public class MainActivity extends Activity implements OnClickListener {
             directionalTagDialog.show();
         } else if (arg0 == Set_Tag) {
             //设置频率频段
-            SetModuleDialog setDialog = new SetModuleDialog(this, iuhfService, modle);
+            SetModuleDialog setDialog = new SetModuleDialog(this, iuhfService, model);
             setDialog.setTitle(R.string.Item_Set_Title);
             setDialog.show();
 
@@ -325,7 +325,7 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             //设置密码
             SetPasswordDialog setPasswordDialog = new SetPasswordDialog(this
-                    , iuhfService, current_tag_epc, modle);
+                    , iuhfService, current_tag_epc, model);
             setPasswordDialog.setTitle(R.string.SetPasswd_Btn);
             setPasswordDialog.show();
         } else if (arg0 == Set_EPC) {
@@ -346,7 +346,7 @@ public class MainActivity extends Activity implements OnClickListener {
             }
             //锁
             LockTagDialog lockTagDialog = new LockTagDialog(this, iuhfService
-                    , current_tag_epc, modle);
+                    , current_tag_epc, model);
             lockTagDialog.setTitle(R.string.Lock_Btn);
             lockTagDialog.show();
         } else if (arg0 == btn_inv_set) {
@@ -385,6 +385,8 @@ public class MainActivity extends Activity implements OnClickListener {
                     }
                 }
                 return false;
+            default:
+                break;
         }
         return super.onKeyDown(keyCode, event);
     }
