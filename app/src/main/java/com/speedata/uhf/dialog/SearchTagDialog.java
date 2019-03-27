@@ -1,5 +1,6 @@
 package com.speedata.uhf.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.media.AudioManager;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.speedata.libuhf.IUHFService;
+import com.speedata.libuhf.UHFManager;
 import com.speedata.libuhf.bean.SpdInventoryData;
 import com.speedata.libuhf.interfaces.OnSpdInventoryListener;
 import com.speedata.libuhf.utils.SharedXmlUtil;
@@ -118,6 +120,7 @@ public class SearchTagDialog extends Dialog implements
     }
 
     //新的Listener回调参考代码
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -169,6 +172,8 @@ public class SearchTagDialog extends Dialog implements
                         Toast.makeText(cont, "There is a problem in exporting! Please try again", Toast.LENGTH_SHORT).show();
                     }
                     break;
+                default:
+                    break;
             }
 
         }
@@ -206,6 +211,8 @@ public class SearchTagDialog extends Dialog implements
                 //取消掩码
                 iuhfService.selectCard(1, "", false);
                 EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
+                //检测电压
+                UHFManager.startCheckV();
                 iuhfService.inventoryStart();
                 startCheckingTime = System.currentTimeMillis();
                 Action.setText(R.string.Stop_Search_Btn);
