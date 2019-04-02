@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="380dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextBlueStyle"
+            android:text="通话项:"/>
+
+        <Spinner
+            android:id="@+id/sp_session"
+            style="@style/SpinnerDefaultStyle"
+            android:entries="@array/arr_Session"/>
+
+
+        <Button
+            android:id="@+id/set_session"
+            style="@style/ButtonStyle"
+            android:text="设置"/>
+
+        <Button
+            android:id="@+id/get_session"
+            style="@style/ButtonStyle"
+            android:text="获取"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="算法"
+            android:textSize="@dimen/TextSize"/>
+
+        <RadioGroup
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_dynamic_algorithm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:checked="true"
+                android:text="动态算法"
+                android:textSize="@dimen/TextSize"/>
+
+            <RadioButton
+                android:id="@+id/rb_fixed_algorithm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="固定算法"
+                android:textSize="@dimen/TextSize"/>
+
+        </RadioGroup>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/TextBlueStyle"
+            android:text="翻转:"/>
+
+        <Spinner
+            android:id="@+id/sp_target"
+            style="@style/SpinnerDefaultStyle"
+            android:entries="@array/arr_target"/>
+
+
+        <TextView
+            style="@style/TextBlueStyle"
+            android:text="重试次数"/>
+
+        <EditText
+            android:id="@+id/et_try"
+            style="@style/EditStyle_w_40"
+            android:ems="3"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="0"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dynamic_algorithm_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="起始Q值："/>
+
+            <EditText
+                android:id="@+id/et_start_q"
+                style="@style/EditStyle_w_40"
+                android:ems="3"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="4"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="Q值范围："/>
+
+            <EditText
+                android:id="@+id/et_min_value"
+                style="@style/EditStyle_w_40"
+                android:ems="3"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="0"/>
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="—"/>
+
+            <EditText
+                android:id="@+id/et_max_value"
+                style="@style/EditStyle_w_40"
+                android:ems="3"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="15"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="阀值："/>
+
+            <EditText
+                android:id="@+id/et_threshold"
+                style="@style/EditStyle_w_40"
+                android:ems="3"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="4"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/fixed_algorithm_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="Q值："/>
+
+            <EditText
+                android:id="@+id/et_q_value"
+                style="@style/EditStyle_w_40"
+                android:ems="3"
+                android:inputType="number"
+                android:text="4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextBlueStyle"
+                android:text="是否重复:"/>
+
+            <Spinner
+                android:id="@+id/sp_repeat"
+                style="@style/SpinnerDefaultStyle"
+                android:entries="@array/arr_repeat"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/set_algorithm"
+            style="@style/ButtonStyle"
+            android:text="设置算法"/>
+
+        <Button
+            android:id="@+id/get_algorithm"
+            style="@style/ButtonStyle"
+            android:layout_marginLeft="10dp"
+            android:text="获取算法"/>
+    </LinearLayout>
+
+</LinearLayout>

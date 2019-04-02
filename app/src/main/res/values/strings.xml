@@ -100,4 +100,24 @@
     <string name="set_success">Setting Success</string>
     <string name="dialog_dir_epc">Fill in the EPC you are looking for</string>
     <string name="dialog_dir_seek">Find Now</string>
+
+    <string name="setInv">Inventory Settings</string>
+
+    <string-array name="arr_Session">
+        <item>s0</item>
+        <item>s1</item>
+        <item>s2</item>
+        <item>s3</item>
+    </string-array>
+
+    <string-array name="arr_target">
+        <item>Using</item>
+        <item>Forbidden</item>
+    </string-array>
+
+    <string-array name="arr_repeat">
+        <item>Forbidden</item>
+        <item>Using</item>
+    </string-array>
+
 </resources>

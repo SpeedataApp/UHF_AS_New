@@ -6,29 +6,29 @@
     android:padding="5dp">
 
     <LinearLayout
-    android:id="@+id/linearLayout1"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1">
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/textView_item"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        android:gravity="center"
-        android:text="@string/Name_item" />
+        <TextView
+            android:id="@+id/textView_item"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="@string/Name_item" />
 
-    <TextView
-        android:id="@+id/textView_epc"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.8"
-        android:gravity="center"
-        android:text="@string/TextView_Null" />
+        <TextView
+            android:id="@+id/textView_epc"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="@string/TextView_Null" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -52,11 +52,10 @@
     </LinearLayout>
 
     <CheckBox
+        android:id="@+id/checkbox_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkbox_close"
-        android:text="@string/check_box_close"
-        />
+        android:text="@string/check_box_close" />
 
     <Button
         android:id="@+id/btn_search"
@@ -80,6 +79,7 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:text="@string/Write_Btn_T" />
+
     <Button
         android:id="@+id/btn_direction"
         android:layout_width="match_parent"
@@ -139,6 +139,22 @@
             android:text="@string/spt"
             android:visibility="gone" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_setInv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/setInv" />
     </LinearLayout>
 
     <TextView

@@ -25,6 +25,7 @@ import com.speedata.libuhf.utils.CommonUtils;
 import com.speedata.libuhf.utils.SharedXmlUtil;
 import com.speedata.uhf.dialog.DirectionalTagDialog;
 import com.speedata.uhf.dialog.InvSetDialog;
+import com.speedata.uhf.dialog.InventorySettingDialog;
 import com.speedata.uhf.dialog.LockTagDialog;
 import com.speedata.uhf.dialog.ReadTagDialog;
 import com.speedata.uhf.dialog.SearchTagDialog;
@@ -53,6 +54,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private Button Set_EPC;
     private Button Lock_Tag;
     private Button btn_inv_set;
+    private Button mButtonSetInv;
     private IUHFService iuhfService;
     private String current_tag_epc = null;
     private Button Speedt;
@@ -246,6 +248,8 @@ public class MainActivity extends Activity implements OnClickListener {
         Lock_Tag.setEnabled(false);
         Area_Select.setEnabled(false);
         //        SendData("111");
+        mButtonSetInv = findViewById(R.id.button_setInv);
+        mButtonSetInv.setOnClickListener(this);
     }
 
 
@@ -353,6 +357,9 @@ public class MainActivity extends Activity implements OnClickListener {
             InvSetDialog invSetDialog = new InvSetDialog(this, iuhfService);
             invSetDialog.setTitle("Inv Set");
             invSetDialog.show();
+        } else if (arg0 == mButtonSetInv) {
+            InventorySettingDialog inventorySettingDialog = new InventorySettingDialog(this);
+            inventorySettingDialog.show();
         }
 
     }

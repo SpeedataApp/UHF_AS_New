@@ -8,4 +8,34 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextBlueStyle">
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/TextSize</item>
+    </style>
+
+    <style name="SpinnerDefaultStyle">
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/spinner_width_100</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+
+    <style name="EditStyle_w_40">
+        <item name="android:textSize">@dimen/TextSize</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/spinner_width_60</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
 </resources>

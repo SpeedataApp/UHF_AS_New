@@ -100,4 +100,23 @@
     <string name="set_success">设置成功</string>
     <string name="dialog_dir_epc">填入要寻找的EPC</string>
     <string name="dialog_dir_seek">开始寻找</string>
+
+    <string name="setInv">盘点设置</string>
+
+
+    <string-array name="arr_Session">
+        <item>s0</item>
+        <item>s1</item>
+        <item>s2</item>
+        <item>s3</item>
+    </string-array>
+
+    <string-array name="arr_target">
+        <item>启用</item>
+        <item>禁用</item>
+    </string-array>
+    <string-array name="arr_repeat">
+        <item>禁用</item>
+        <item>启用</item>
+    </string-array>
 </resources>
