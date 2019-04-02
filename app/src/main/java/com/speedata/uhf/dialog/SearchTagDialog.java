@@ -211,8 +211,6 @@ public class SearchTagDialog extends Dialog implements
                 //取消掩码
                 iuhfService.selectCard(1, "", false);
                 EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
-                //检测电压
-                UHFManager.startCheckV();
                 iuhfService.inventoryStart();
                 startCheckingTime = System.currentTimeMillis();
                 Action.setText(R.string.Stop_Search_Btn);
