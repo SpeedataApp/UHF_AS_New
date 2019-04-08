@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">UHF</string>
 
-    <string name="check_box_close">Exit  with close quick scan</string>
     <string name="Search_Btn_T">SEARCH</string>
     <string name="Read_Btn_T">READ</string>
     <string name="Write_Btn_T">WRITE</string>
@@ -100,8 +99,49 @@
     <string name="set_success">Setting Success</string>
     <string name="dialog_dir_epc">Fill in the EPC you are looking for</string>
     <string name="dialog_dir_seek">Find Now</string>
-
     <string name="setInv">Inventory Settings</string>
+
+    <!--inventory_setting layout-->
+    <string name="session">Session:</string>
+    <string name="btn_get">get</string>
+    <string name="algorithm">Algorithm</string>
+    <string name="dynamic_algorithm">DynamicAlgorithm</string>
+    <string name="fixed_algorithm">FixedAlgorithm</string>
+    <string name="target">Target:</string>
+    <string name="retry_count">retry count:</string>
+    <string name="start_q_value">Starting Q Value：</string>
+    <string name="q_value_range">Q value range:</string>
+    <string name="threshold">threshold：</string>
+    <string name="q_value">Q value:</string>
+    <string name="is_repeat">Whether to repeat:</string>
+    <string name="btn_set_algorithm">SetAlgorithm</string>
+    <string name="btn_get_algorithm">GetAlgorithm</string>
+    <string name="gen2_target">Target:</string>
+    <string name="btn_get_value">GetValue</string>
+
+    <!--InventorySettingDialog-->
+    <string name="toast_try">Please enter the number of retries</string>
+    <string name="toast_invalid_q">Q value is invalid if it is not within the value range of Q value 0 ~ 15</string>
+    <string name="toast_invalid_try">The number of invalid retries is not within the value range of 0 ~ 10</string>
+    <string name="toast_set_success">Set success</string>
+    <string name="toast_inventory">Taking inventory</string>
+    <string name="toast_set_fail">Set failed</string>
+    <string name="toast_start_q">Please enter the starting Q value</string>
+    <string name="toast_min_q">Please enter the minimum Q value</string>
+    <string name="toast_max_q">Please enter the maximum Q value</string>
+    <string name="toast_threshold">Please enter the threshold</string>
+    <string name="toast_q_range">Q range setting error</string>
+    <string name="toast_invalid_threshold">Not within the value range of threshold 0 ~ 255, invalid threshold</string>
+    <string name="toast_set_session">Set session successful</string>
+    <string name="toast_get_session">Get session successful</string>
+    <string name="toast_set_q_ok">The Q value was set successfully</string>
+    <string name="toast_set_q_fail">Q value setting failed</string>
+    <string name="toast_set_target_ok">Target set successfully</string>
+    <string name="toast_set_target_fail">Target setting failed</string>
+    <string name="toast_get_q_fail">Failed to get Q value</string>
+    <string name="toast_get_target_fail">Target fetch failed</string>
+    <string name="toast_get_success">Get success</string>
+    <string name="toast_get_fail">Get fail</string>
 
     <string-array name="arr_Session">
         <item>s0</item>
@@ -119,5 +159,6 @@
         <item>Forbidden</item>
         <item>Using</item>
     </string-array>
+
 
 </resources>

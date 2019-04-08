@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">UHF</string>
 
-    <string name="check_box_close">退出时关闭焦点扫描EPC</string>
     <string name="Search_Btn_T">选卡</string>
     <string name="Read_Btn_T">读</string>
     <string name="Write_Btn_T">写</string>
@@ -102,6 +101,48 @@
     <string name="dialog_dir_seek">开始寻找</string>
 
     <string name="setInv">盘点设置</string>
+
+    <!--inventory_setting layout-->
+    <string name="session">通话项：</string>
+    <string name="btn_get">获取</string>
+    <string name="algorithm">算法</string>
+    <string name="dynamic_algorithm">动态算法</string>
+    <string name="fixed_algorithm">固定算法</string>
+    <string name="target">翻转：</string>
+    <string name="retry_count">重试次数</string>
+    <string name="start_q_value">起始Q值：</string>
+    <string name="q_value_range">Q值范围：</string>
+    <string name="threshold">阀值：</string>
+    <string name="q_value">Q值：</string>
+    <string name="is_repeat">是否重复：</string>
+    <string name="btn_set_algorithm">设置算法</string>
+    <string name="btn_get_algorithm">获取算法</string>
+    <string name="gen2_target">目标：</string>
+    <string name="btn_get_value">获取数值</string>
+
+    <!--InventorySettingDialog-->
+    <string name="toast_try">请输入重试次数</string>
+    <string name="toast_invalid_q">不在Q值0～15的取值范围内，无效Q值</string>
+    <string name="toast_invalid_try">不在重试次数0～10的取值范围内，无效重试次数</string>
+    <string name="toast_set_success">设置成功</string>
+    <string name="toast_inventory">正在盘点</string>
+    <string name="toast_set_fail">设置失败</string>
+    <string name="toast_start_q">请输入起始Q值</string>
+    <string name="toast_min_q">请输入最小Q值</string>
+    <string name="toast_max_q">请输入最大Q值</string>
+    <string name="toast_threshold">请输入阀值</string>
+    <string name="toast_q_range">Q值范围设置错误</string>
+    <string name="toast_invalid_threshold">不在阀值0～255的取值范围内，无效阀值</string>
+    <string name="toast_set_session">设置通话项成功</string>
+    <string name="toast_get_session">获取通话项成功</string>
+    <string name="toast_set_q_ok">Q值设置成功</string>
+    <string name="toast_set_q_fail">Q值设置失败</string>
+    <string name="toast_set_target_ok">target设置成功</string>
+    <string name="toast_set_target_fail">target设置失败</string>
+    <string name="toast_get_q_fail">Q值获取失败</string>
+    <string name="toast_get_target_fail">Target获取失败</string>
+    <string name="toast_get_success">获取成功</string>
+    <string name="toast_get_fail">获取失败</string>
 
 
     <string-array name="arr_Session">
