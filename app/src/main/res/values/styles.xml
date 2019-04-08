@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
     <style name="TextBlueStyle">
         <item name="android:textColor">@color/blue</item>
         <item name="android:textSize">@dimen/TextSize</item>
@@ -37,5 +38,7 @@
         <item name="android:layout_width">@dimen/spinner_width_60</item>
         <item name="android:textColor">@color/red</item>
     </style>
+
+
 
 </resources>
