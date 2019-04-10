@@ -297,14 +297,6 @@ public class MainActivity extends Activity implements OnClickListener {
             writeTag.show();
 
         } else if (arg0 == Search_Tag) {
-            int i = iuhfService.setQueryTagGroup(0, 0, 0);
-            if (i == 0) {
-                //设置通话项成功
-            }
-            i = iuhfService.setDynamicAlgorithm();
-            if (i == 0) {
-                //设置成功
-            }
             //盘点选卡
             SearchTagDialog searchTag = new SearchTagDialog(this, iuhfService, model);
             searchTag.setTitle(R.string.Item_Choose);
