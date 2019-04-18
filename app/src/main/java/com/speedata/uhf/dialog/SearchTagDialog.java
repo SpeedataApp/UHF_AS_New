@@ -131,9 +131,7 @@ public class SearchTagDialog extends Dialog implements
                 case 1:
                     scant++;
                     if (!cbb.isChecked()) {
-                        if (scant % 1 == 0) {
-                            soundPool.play(soundId, 1, 1, 0, 0, 1);
-                        }
+                        soundPool.play(soundId, 1, 1, 0, 0, 1);
                     }
                     SpdInventoryData var1 = (SpdInventoryData) msg.obj;
                     int j;

@@ -133,7 +133,7 @@ public class SetEPCDialog extends Dialog implements
         if (epclength * 2 < EPC.length) {
             return -3;
         }
-        res = iuhfService.read_area(iuhfService.EPC_A, 1, 1, passwd);
+        res = iuhfService.read_area(IUHFService.EPC_A, 1, 1, passwd);
         if (res == null) {
             return -5;
         }
@@ -147,7 +147,7 @@ public class SetEPCDialog extends Dialog implements
             return -1;
         }
         SystemClock.sleep(500);
-        return iuhfService.writeArea(iuhfService.EPC_A, 1, f.length / 2, passwd, f);
+        return iuhfService.writeArea(IUHFService.EPC_A, 1, f.length / 2, passwd, f);
     }
 
 
