@@ -40,6 +40,7 @@ public class InvSetDialog extends Dialog implements android.view.View.OnClickLis
         // TODO Auto-generated constructor stub
     }
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invset);

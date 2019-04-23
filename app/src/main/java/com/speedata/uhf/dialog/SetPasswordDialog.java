@@ -25,7 +25,7 @@ import com.speedata.uhf.R;
  */
 
 public class SetPasswordDialog extends Dialog implements
-        android.view.View.OnClickListener {
+        View.OnClickListener {
 
     private String[] passwd_list = {"Kill Password", "Access Password"};
     private Button Ok;
@@ -83,15 +83,15 @@ public class SetPasswordDialog extends Dialog implements
                 byte[] epcData = var1.getEPCData();
                 String hexString = StringUtils.byteToHexString(epcData, var1.getEPCLen());
                 if (!TextUtils.isEmpty(hexString)) {
-                    stringBuilder.append("EPC：" + hexString + "\n");
+                    stringBuilder.append("EPC：").append(hexString).append("\n");
                 }
                 if (var1.getStatus() == 0) {
                     //状态判断，已经写卡成功了就不返回错误码了
                     isSuccess = true;
-                    stringBuilder.append("WriteSuccess" + "\n");
+                    stringBuilder.append(context.getResources().getString(R.string.Status_Write_Card_Ok)).append("\n");
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
                 } else {
-                    stringBuilder.append("WriteError：" + var1.getStatus() + "\n");
+                    stringBuilder.append(context.getResources().getString(R.string.Status_Write_Card_Faild)).append(var1.getStatus()).append("\n");
                 }
                 if (!isSuccess) {
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
@@ -107,18 +107,18 @@ public class SetPasswordDialog extends Dialog implements
             final String cur_pass = access_passwd.getText().toString();
             final String new_pass = new_passwd.getText().toString();
             if (TextUtils.isEmpty(cur_pass) || TextUtils.isEmpty(new_pass)) {
-                Toast.makeText(context, "参数不能为空", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getResources().getString(R.string.param_not_null), Toast.LENGTH_SHORT).show();
                 return;
             }
             final int which = area_select.getSelectedItemPosition();
-            Status.setText("正在修改密码中....");
+            Status.setText(context.getResources().getString(R.string.changing_password));
             isSuccess = false;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     int setPassword = iuhfService.setPassword(which, cur_pass, new_pass);
                     if (setPassword != 0) {
-                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                        handler.sendMessage(handler.obtainMessage(1,context.getResources().getString(R.string.param_error)));
                     }
                 }
             }).start();

@@ -145,6 +145,26 @@
     <string name="toast_get_success">获取成功</string>
     <string name="toast_get_fail">获取失败</string>
 
+    <string name="param_not_null">参数不能为空</string>
+    <string name="set_read_fail">读取区域设置读取失败</string>
+    <string name="invalid_select">无效的选择</string>
+    <string name="set_freq_fail">设置定频区域失败</string>
+    <string name="set_freq_ok">设置定频区域成功</string>
+    <string name="update_set">更新设置</string>
+    <string name="power_range">值范围为0 ~ 33</string>
+    <string name="set_power_fail">设置天线功率失败</string>
+    <string name="set_power_ok">设置天线功率成功</string>
+    <string name="set_fix_ok">设置频点成功</string>
+    <string name="set_fix_fail">设置频点失败</string>
+    <string name="set_carrier_ok">设置载波成功</string>
+    <string name="set_carrier_fail">设置载波失败</string>
+    <string name="toast_update_now">设置已更新</string>
+
+    <string name="locking_card">正在锁卡中....</string>
+    <string name="param_error">参数不正确</string>
+    <string name="reading_card">正在读卡中....</string>
+    <string name="writing_card">正在写卡中....</string>
+    <string name="changing_password">正在修改密码中....</string>
 
     <string-array name="arr_Session">
         <item>s0</item>

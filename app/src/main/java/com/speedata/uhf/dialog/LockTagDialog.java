@@ -24,7 +24,7 @@ import com.speedata.uhf.R;
  */
 
 public class LockTagDialog extends Dialog implements
-        android.view.View.OnClickListener {
+        View.OnClickListener {
 
     private String[] area_list = {"Kill password", "Access password",
             "EPC", "TID", "USER"};
@@ -42,6 +42,7 @@ public class LockTagDialog extends Dialog implements
     private String current_tag_epc;
     private String model;
     private boolean isSuccess = false;
+    private Context mContext;
 
     public LockTagDialog(Context context, IUHFService iuhfService
             , String current_tag_epc, String model) {
@@ -50,6 +51,7 @@ public class LockTagDialog extends Dialog implements
         this.iuhfService = iuhfService;
         this.current_tag_epc = current_tag_epc;
         this.model = model;
+        mContext = context;
     }
 
     @Override
@@ -93,10 +95,10 @@ public class LockTagDialog extends Dialog implements
                 if (var1.getStatus() == 0) {
                     //状态判断，已经写卡成功了就不返回错误码了
                     isSuccess = true;
-                    stringBuilder.append("WriteSuccess" + "\n");
+                    stringBuilder.append(mContext.getResources().getString(R.string.Status_Write_Card_Ok) + "\n");
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
                 } else {
-                    stringBuilder.append("WriteError：" + var1.getStatus() + "\n");
+                    stringBuilder.append(mContext.getResources().getString(R.string.Status_Write_Card_Faild) + var1.getStatus() + "\n");
                 }
                 if (!isSuccess) {
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
@@ -114,13 +116,13 @@ public class LockTagDialog extends Dialog implements
             final int style_nr = style.getSelectedItemPosition();
             final String ps = passwd.getText().toString();
 
-            Status.setText("正在锁卡中....");
+            Status.setText(R.string.locking_card);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     int reval = iuhfService.setLock(style_nr, area_nr, ps);
                     if (reval != 0) {
-                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                        handler.sendMessage(handler.obtainMessage(1,mContext.getResources().getString(R.string.param_error)));
                     }
                 }
             }).start();

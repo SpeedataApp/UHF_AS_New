@@ -144,6 +144,27 @@
     <string name="toast_get_success">Get success</string>
     <string name="toast_get_fail">Get fail</string>
 
+    <string name="param_not_null">Parameter cannot be null</string>
+    <string name="set_read_fail">read region setting read failed</string>
+    <string name="invalid_select">Invalid select</string>
+    <string name="set_freq_fail">set freq region failed</string>
+    <string name="set_freq_ok">set freq region OK</string>
+    <string name="update_set">update settings</string>
+    <string name="power_range">value range is 0 ~ 33</string>
+    <string name="set_power_fail">set antenna power failed</string>
+    <string name="set_power_ok">set antenna power OK</string>
+    <string name="set_fix_ok">set fixed frequency OK</string>
+    <string name="set_fix_fail">set fixed frequency failed</string>
+    <string name="set_carrier_ok">Set carrier success</string>
+    <string name="set_carrier_fail">Set carrier failed</string>
+    <string name="toast_update_now">update settings now</string>
+
+    <string name="locking_card">Locking the card…</string>
+    <string name="param_error">Parameter error</string>
+    <string name="reading_card">Reading the card…</string>
+    <string name="writing_card">Writing card…</string>
+    <string name="changing_password">Changing password…</string>
+
     <string-array name="arr_Session">
         <item>s0</item>
         <item>s1</item>

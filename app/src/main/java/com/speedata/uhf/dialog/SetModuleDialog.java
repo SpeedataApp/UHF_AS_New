@@ -44,11 +44,9 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
     private EditText et_zaibo;
     private Button button_zaibo;
     private LinearLayout ll_zaibo;
-    private LinearLayout ll_session;
+    private boolean isSet = false;
 
-    private Button btnSetSession, btnGetSession;
-    private Spinner session;
-    private final String[] sessionItem = {"s0", "s1", "s2", "s3"};
+
 
 
     public SetModuleDialog(Context context, IUHFService iuhfService, String model) {
@@ -58,14 +56,11 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         this.mContext = context;
     }
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_setting);
         initView();
-
-        ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_spinner_item, sessionItem);
-        session.setAdapter(sessionAdapter);
 
         ArrayAdapter<String> tmp;
         if ("r2k".equals(model)) {
@@ -81,18 +76,17 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
 
         int re = iuhfService.getFreqRegion();
         if ("r2k".equals(model)) {
-            ll_session.setVisibility(View.VISIBLE);
-            if (re == iuhfService.REGION_CHINA_920_925) {
+            if (re == IUHFService.REGION_CHINA_920_925) {
                 lf.setSelection(1, true);
-            } else if (re == iuhfService.REGION_CHINA_840_845) {
+            } else if (re == IUHFService.REGION_CHINA_840_845) {
                 lf.setSelection(0, true);
-            } else if (re == iuhfService.REGION_CHINA_902_928) {
+            } else if (re == IUHFService.REGION_CHINA_902_928) {
                 lf.setSelection(2, true);
-            } else if (re == iuhfService.REGION_EURO_865_868) {
+            } else if (re == IUHFService.REGION_EURO_865_868) {
                 lf.setSelection(3, true);
             } else if (re == -1) {
                 lf.setSelection(5, true);
-                status.setText("read region setting read failed");
+                status.setText(R.string.set_read_fail);
                 Log.e("r2000_kt45", "read region setting read failed");
             } else {
                 lf.setSelection(4, true);
@@ -100,17 +94,17 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
                 ll_zaibo.setVisibility(View.VISIBLE);
             }
         } else {
-            if (re == iuhfService.REGION_CHINA_920_925) {
+            if (re == IUHFService.REGION_CHINA_920_925) {
                 lf.setSelection(1, true);
-            } else if (re == iuhfService.REGION_CHINA_840_845) {
+            } else if (re == IUHFService.REGION_CHINA_840_845) {
                 lf.setSelection(0, true);
-            } else if (re == iuhfService.REGION_CHINA_902_928) {
+            } else if (re == IUHFService.REGION_CHINA_902_928) {
                 lf.setSelection(2, true);
-            } else if (re == iuhfService.REGION_EURO_865_868) {
+            } else if (re == IUHFService.REGION_EURO_865_868) {
                 lf.setSelection(3, true);
             } else {
                 lf.setSelection(4, true);
-                status.setText("read region setting read failed");
+                status.setText(R.string.set_read_fail);
                 Log.e("r2000_kt45", "read region setting read failed");
             }
         }
@@ -126,7 +120,6 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             setp.setEnabled(true);
         }
 
-        getSession();
     }
 
     private void initView() {
@@ -148,13 +141,6 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         button_zaibo.setOnClickListener(this);
         et_zaibo = (EditText) findViewById(R.id.et_zaibo);
         ll_zaibo = (LinearLayout) findViewById(R.id.ll_zaibo);
-        ll_session = (LinearLayout) findViewById(R.id.ll_session);
-        //session
-        btnGetSession = (Button) findViewById(R.id.button_get_session);
-        btnGetSession.setOnClickListener(this);
-        btnSetSession = (Button) findViewById(R.id.button_set_session);
-        btnSetSession.setOnClickListener(this);
-        session = (Spinner) findViewById(R.id.spinner_session);
     }
 
     @Override
@@ -163,71 +149,71 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
         if (v == setf) {
             int freq_region = lf.getSelectedItemPosition();
             if (freq_region >= 4) {
-                status.setText("Invalid select");
+                status.setText(R.string.invalid_select);
             } else {
                 if (iuhfService.setFreqRegion(freq_region) < 0) {
-                    status.setText("set freq region failed");
+                    status.setText(R.string.set_freq_fail);
                 } else {
-                    status.setText("set freq region ok");
-                    back.setText("update settings");
+                    status.setText(R.string.set_freq_ok);
+                    back.setText(R.string.update_set);
+                    isSet = true;
                     this.setCancelable(false);
                 }
             }
 
         } else if (v == back) {
-            new toast_thread().setr("update settings now").start();
+            if (isSet){
+                new toast_thread().setr(mContext.getResources().getString(R.string.toast_update_now)).start();
+            }
             dismiss();
         } else if (v == setp) {
-            int ivp = Integer.parseInt(pv.getText().toString());
+            String power = pv.getText().toString();
+            if (power.isEmpty()){
+                status.setText(R.string.param_not_null);
+                return;
+            }
+            int ivp = Integer.parseInt(power);
             if ((ivp < 0) || (ivp > 33)) {
-                status.setText("value range is 0 ~ 33");
+                status.setText(R.string.power_range);
             } else {
                 int rv = iuhfService.setAntennaPower(ivp);
                 if (rv < 0) {
-                    status.setText("set antenna power failed");
+                    status.setText(R.string.set_power_fail );
                 } else {
-                    status.setText("set antenna power ok");
-                    back.setText("update settings");
+                    status.setText(R.string.set_power_ok);
+                    back.setText(R.string.update_set);
+                    isSet = true;
                     this.setCancelable(false);
                 }
             }
         } else if (v == button_set_pindian) {
-            double parseDouble = Double.parseDouble(et_pin_dian.getText().toString());
+            String parse = et_pin_dian.getText().toString();
+            if (parse.isEmpty()){
+                status.setText(R.string.param_not_null);
+                return;
+            }
+            double parseDouble = Double.parseDouble(parse);
             int frequency = iuhfService.setFrequency(parseDouble);
             if (frequency == 0) {
-                status.setText("set fixed frequency ok");
+                status.setText(R.string.set_fix_ok);
                 ll_zaibo.setVisibility(View.VISIBLE);
             } else {
-                status.setText("set fixed frequency failed");
+                status.setText(R.string.set_fix_fail);
                 ll_zaibo.setVisibility(View.GONE);
             }
         } else if (v == button_zaibo) {
-            int zaibo = Integer.parseInt(et_zaibo.getText().toString());
+            String parse = et_zaibo.getText().toString();
+            if (parse.isEmpty()){
+                status.setText(R.string.param_not_null);
+                return;
+            }
+            int zaibo = Integer.parseInt(parse);
             int engTest = iuhfService.enableEngTest(zaibo);
             if (engTest == 0) {
-                status.setText("Set carrier success");
+                status.setText(R.string.set_carrier_ok);
             } else {
-                status.setText("Set carrier failed");
+                status.setText(R.string.set_carrier_fail);
             }
-        } else if (v == btnGetSession) {
-            getSession();
-        } else if (v == btnSetSession) {
-            int setQueryTagGroup = iuhfService.setQueryTagGroup(0, (int) session.getSelectedItemId(), 0);
-            if (setQueryTagGroup == 0) {
-                status.setText("Set success");
-            } else {
-                status.setText("Set failed:" + setQueryTagGroup);
-            }
-        }
-    }
-
-    private void getSession() {
-        int queryTagGroup = iuhfService.getQueryTagGroup();
-        if (queryTagGroup != -1) {
-            session.setSelection(queryTagGroup);
-            status.setText("Get success");
-        } else {
-            status.setText("Get failed");
         }
     }
 
@@ -240,6 +226,7 @@ public class SetModuleDialog extends Dialog implements View.OnClickListener {
             return this;
         }
 
+        @Override
         public void run() {
             super.run();
             Looper.prepare();

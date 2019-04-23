@@ -23,7 +23,7 @@ import com.speedata.uhf.R;
  */
 
 public class WriteTagDialog extends Dialog implements
-        android.view.View.OnClickListener {
+        View.OnClickListener {
 
     private Button Ok;
     private Button Cancle;
@@ -77,15 +77,15 @@ public class WriteTagDialog extends Dialog implements
                 byte[] epcData = var1.getEPCData();
                 String hexString = StringUtils.byteToHexString(epcData, var1.getEPCLen());
                 if (!TextUtils.isEmpty(hexString)) {
-                    stringBuilder.append("EPC：" + hexString + "\n");
+                    stringBuilder.append("EPC：").append(hexString).append("\n");
                 }
                 if (var1.getStatus() == 0) {
                     //状态判断，已经写卡成功了就不返回错误码了
                     isSuccess = true;
-                    stringBuilder.append("WriteSuccess" + "\n");
+                    stringBuilder.append(mContext.getResources().getString(R.string.Status_Write_Card_Ok)).append("\n");
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
                 } else {
-                    stringBuilder.append("WriteError：" + var1.getStatus() + "\n");
+                    stringBuilder.append(mContext.getResources().getString(R.string.Status_Write_Card_Faild)).append(var1.getStatus()).append("\n");
                 }
                 if (!isSuccess) {
                     handler.sendMessage(handler.obtainMessage(1, stringBuilder));
@@ -105,20 +105,20 @@ public class WriteTagDialog extends Dialog implements
             final String str_content = Write_Content.getText().toString();
             if (TextUtils.isEmpty(str_addr) || TextUtils.isEmpty(str_count) || TextUtils.isEmpty(str_passwd)
                     || TextUtils.isEmpty(str_content)) {
-                Toast.makeText(mContext, "参数不能为空", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.param_not_null), Toast.LENGTH_SHORT).show();
                 return;
             }
             final byte[] write = StringUtils.stringToByte(str_content);
             final int addr = Integer.parseInt(str_addr);
             final int count = Integer.parseInt(str_count);
-            Status.setText("正在写卡中....");
+            Status.setText(mContext.getResources().getString(R.string.writing_card));
             isSuccess = false;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     int writeArea = iuhfService.writeArea(which_choose, addr, count, str_passwd, write);
                     if (writeArea != 0) {
-                        handler.sendMessage(handler.obtainMessage(1,"参数不正确"));
+                        handler.sendMessage(handler.obtainMessage(1,mContext.getResources().getString(R.string.param_error)));
                     }
                 }
             }).start();
