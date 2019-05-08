@@ -15,7 +15,7 @@ allprojects {
 ```
 ```
  dependencies {
-    compile 'com.github.SpeedataG:UHF:7.8.2'
+    compile 'com.github.SpeedataG:UHF:7.8.3'
   }
 ```
 ## 低电使用说明
