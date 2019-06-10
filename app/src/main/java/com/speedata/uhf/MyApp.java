@@ -23,8 +23,10 @@ import java.io.IOException;
  */
 
 public class MyApp extends Application {
+    /**
+     * 单例
+     */
     private static MyApp m_application;
-    // 单例
 
     private IUHFService iuhfService;
     public static MyApp getInstance() {
@@ -47,8 +49,6 @@ public class MyApp extends Application {
         // 初始化Bugly
         Bugly.init(getApplicationContext(), "75242a29e5", true, strategy);
 
-//        startService(new Intent(this,MyService.class));
-
         try {
             iuhfService = UHFManager.getUHFService(getApplicationContext());
         } catch (Exception e) {
@@ -60,6 +60,7 @@ public class MyApp extends Application {
                 Toast.makeText(getApplicationContext(), "Module does not exist", Toast.LENGTH_SHORT).show();
             }
         }
+        startService(new Intent(this,MyService.class));
     }
 
     public IUHFService getIuhfService() {

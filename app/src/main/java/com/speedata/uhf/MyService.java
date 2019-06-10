@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ public class MyService extends Service {
      * 按设备侧键触发的扫描广播
      */
     public static final String SCAN = "com.geomobile.se4500barcode";
+    private static final String START_SCAN = "com.spd.action.start_uhf";
+    private static final String STOP_SCAN = "com.spd.action.stop_uhf";
     public static final String update = "uhf.update";
     private static final String TAG = "UHFService";
     boolean isOpen = false;
@@ -43,13 +46,17 @@ public class MyService extends Service {
             String action = intent.getAction();
 
             Log.d(TAG, "===rece===action" + action);
-            if (action.equals(SCAN)) {
+            assert action != null;
+            if (action.equals(START_SCAN)) {
                 //启动超高频扫描
                 if (openDev()) {
 
                     iuhfService.inventoryStart();
                     isScan = true;
                 }
+            } else if (action.equals(STOP_SCAN)) {
+                iuhfService.inventoryStop();
+                isScan = false;
             } else if (action.equals(update)) {
                 initUHF();
             }
@@ -134,18 +141,20 @@ public class MyService extends Service {
     private void initReceive() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(SCAN);
+        filter.addAction(START_SCAN);
+        filter.addAction(STOP_SCAN);
         filter.addAction(update);
         registerReceiver(receiver, filter);
     }
 
     private void SendData(String data) {
         soundPool.play(soundId, 1, 1, 0, 0, 1);
-        //        Intent intent = new Intent();
-        //        intent.setAction(ACTION_SEND_DATA);
-        //        Bundle bundle = new Bundle();
-        //        bundle.putString("se4500", data);
-        //        intent.putExtras(bundle);
-        //        sendBroadcast(intent);
+        Intent intent = new Intent();
+        intent.setAction(ACTION_SEND_DATA);
+        Bundle bundle = new Bundle();
+        bundle.putString("se4500", data);
+        intent.putExtras(bundle);
+        sendBroadcast(intent);
         Log.d(TAG, "===SendData===" + data);
     }
 
@@ -158,7 +167,6 @@ public class MyService extends Service {
         if (!isOpen) {
             final int i = iuhfService.openDev();
             if (i != 0) {
-                //            Cur_Tag_Info.setText("Open serialport failed");
                 new AlertDialog.Builder(this).setTitle(R.string.DIA_ALERT).setMessage(R.string.DEV_OPEN_ERR).setPositiveButton(R.string.DIA_CHECK, new DialogInterface.OnClickListener() {
 
                     @Override
