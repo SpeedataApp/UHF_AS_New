@@ -2,7 +2,10 @@ package com.speedata.uhf.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -29,6 +32,7 @@ import com.speedata.libuhf.bean.SpdInventoryData;
 import com.speedata.libuhf.interfaces.OnSpdInventoryListener;
 import com.speedata.libuhf.utils.SharedXmlUtil;
 import com.speedata.uhf.MsgEvent;
+import com.speedata.uhf.MyApp;
 import com.speedata.uhf.R;
 import com.speedata.uhf.excel.EPCBean;
 import com.speedata.uhf.libutils.excel.ExcelUtils;
@@ -38,6 +42,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jxl.write.Colour;
 
@@ -70,6 +75,35 @@ public class SearchTagDialog extends Dialog implements
     private TextView totalTv;
     private TextView totalTime;
     private long startCheckingTime;//盘点命令下发后截取的系统时间
+    /**
+     * 按设备按键触发的扫描广播
+     */
+    public static final String START_SCAN = "com.spd.action.start_uhf";
+    public static final String STOP_SCAN = "com.spd.action.stop_uhf";
+    public static final String SCAN_BARCODE = "com.geomobile.se4500barcode";
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                assert action != null;
+                switch (action) {
+                    case START_SCAN:
+                        //启动超高频扫描
+                        if (inSearch) {
+                            return;
+                        }
+                        startUhf();
+                        break;
+                    case STOP_SCAN:
+                        if (inSearch) {
+                            stopUhf();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+    };
 
     public SearchTagDialog(Context context, IUHFService iuhfService, String model) {
         super(context);
@@ -85,6 +119,7 @@ public class SearchTagDialog extends Dialog implements
         setContentView(R.layout.setreader);
 
         initView();
+        initReceive();
         Cancle = (Button) findViewById(R.id.btn_search_cancle);
         Cancle.setOnClickListener(this);
         Action = (Button) findViewById(R.id.btn_search_action);
@@ -118,6 +153,16 @@ public class SearchTagDialog extends Dialog implements
                 handler.sendMessage(handler.obtainMessage(1, var1));
             }
         });
+    }
+
+    /**
+     * 注册广播
+     */
+    private void initReceive() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(START_SCAN);
+        filter.addAction(STOP_SCAN);
+        cont.registerReceiver(receiver, filter);
     }
 
     //新的Listener回调参考代码
@@ -186,7 +231,40 @@ public class SearchTagDialog extends Dialog implements
             inSearch = false;
         }
         soundPool.release();
+        if (receiver != null) {
+            cont.unregisterReceiver(receiver);
+        }
         super.onStop();
+    }
+
+    /**
+     * 开始盘点
+     */
+    private void startUhf() {
+        inSearch = true;
+        this.setCancelable(false);
+        scant = 0;
+        firm.clear();
+        //取消掩码
+        iuhfService.selectCard(1, "", false);
+        EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
+        SystemClock.sleep(1);
+        iuhfService.inventoryStart();
+        startCheckingTime = System.currentTimeMillis();
+        Action.setText(R.string.Stop_Search_Btn);
+        Cancle.setEnabled(false);
+        export.setEnabled(false);
+    }
+    /**
+     * 停止盘点
+     */
+    private void stopUhf() {
+        inSearch = false;
+        this.setCancelable(true);
+        iuhfService.inventoryStop();
+        Action.setText(R.string.Start_Search_Btn);
+        Cancle.setEnabled(true);
+        export.setEnabled(true);
     }
 
     @Override
@@ -196,26 +274,9 @@ public class SearchTagDialog extends Dialog implements
             dismiss();
         } else if (v == Action) {
             if (inSearch) {
-                inSearch = false;
-                this.setCancelable(true);
-                iuhfService.inventoryStop();
-                Action.setText(R.string.Start_Search_Btn);
-                Cancle.setEnabled(true);
-                export.setEnabled(true);
+                stopUhf();
             } else {
-                inSearch = true;
-                this.setCancelable(false);
-                scant = 0;
-                firm.clear();
-                //取消掩码
-                iuhfService.selectCard(1, "", false);
-                EventBus.getDefault().post(new MsgEvent("CancelSelectCard", ""));
-                SystemClock.sleep(1);
-                iuhfService.inventoryStart();
-                startCheckingTime = System.currentTimeMillis();
-                Action.setText(R.string.Stop_Search_Btn);
-                Cancle.setEnabled(false);
-                export.setEnabled(false);
+                startUhf();
             }
         } else if (v == export) {
             kProgressHUD = KProgressHUD.create(cont)

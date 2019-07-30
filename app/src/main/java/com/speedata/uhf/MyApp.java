@@ -60,7 +60,7 @@ public class MyApp extends Application {
                 Toast.makeText(getApplicationContext(), "Module does not exist", Toast.LENGTH_SHORT).show();
             }
         }
-        startService(new Intent(this,MyService.class));
+//        startService(new Intent(this,MyService.class));
     }
 
     public IUHFService getIuhfService() {

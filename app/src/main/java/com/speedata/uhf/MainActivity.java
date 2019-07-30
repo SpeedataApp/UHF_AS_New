@@ -27,6 +27,7 @@ import com.speedata.uhf.dialog.DirectionalTagDialog;
 import com.speedata.uhf.dialog.InvSetDialog;
 import com.speedata.uhf.dialog.InventorySettingDialog;
 import com.speedata.uhf.dialog.LockTagDialog;
+import com.speedata.uhf.dialog.PikestaffSetDialog;
 import com.speedata.uhf.dialog.ReadTagDialog;
 import com.speedata.uhf.dialog.SearchTagDialog;
 import com.speedata.uhf.dialog.SetEPCDialog;
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private CheckBox checkBox;
     private BufferedWriter CtrlFile;
     private long mkeyTime = 0;
+    private Button setPikestaffBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -250,6 +252,8 @@ public class MainActivity extends Activity implements OnClickListener {
         //        SendData("111");
         mButtonSetInv = findViewById(R.id.button_setInv);
         mButtonSetInv.setOnClickListener(this);
+        setPikestaffBtn = findViewById(R.id.btn_pikestaff_set);
+        setPikestaffBtn.setOnClickListener(this);
     }
 
 
@@ -352,6 +356,9 @@ public class MainActivity extends Activity implements OnClickListener {
         } else if (arg0 == mButtonSetInv) {
             InventorySettingDialog inventorySettingDialog = new InventorySettingDialog(this);
             inventorySettingDialog.show();
+        }else if (arg0 == setPikestaffBtn){
+            PikestaffSetDialog pikestaffSetDialog = new PikestaffSetDialog(this);
+            pikestaffSetDialog.show();
         }
 
     }

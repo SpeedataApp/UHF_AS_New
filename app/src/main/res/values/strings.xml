@@ -182,5 +182,7 @@
         <item>Using</item>
     </string-array>
 
-
+    <string name="pikestaff_set">pikestaff settings</string>
+    <string name="item_scan">Laser scanning</string>
+    <string name="item_uhf">UHF</string>
 </resources>

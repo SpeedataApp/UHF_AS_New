@@ -155,6 +155,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/setInv" />
+
+        <Button
+            android:id="@+id/btn_pikestaff_set"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/pikestaff_set" />
     </LinearLayout>
 
     <TextView

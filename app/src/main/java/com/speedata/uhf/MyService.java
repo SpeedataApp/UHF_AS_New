@@ -149,12 +149,12 @@ public class MyService extends Service {
 
     private void SendData(String data) {
         soundPool.play(soundId, 1, 1, 0, 0, 1);
-        Intent intent = new Intent();
-        intent.setAction(ACTION_SEND_DATA);
-        Bundle bundle = new Bundle();
-        bundle.putString("se4500", data);
-        intent.putExtras(bundle);
-        sendBroadcast(intent);
+//        Intent intent = new Intent();
+//        intent.setAction(ACTION_SEND_DATA);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("se4500", data);
+//        intent.putExtras(bundle);
+//        sendBroadcast(intent);
         Log.d(TAG, "===SendData===" + data);
     }
 

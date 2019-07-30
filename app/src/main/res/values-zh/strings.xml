@@ -181,4 +181,8 @@
         <item>禁用</item>
         <item>启用</item>
     </string-array>
+
+    <string name="pikestaff_set">枪柄设置</string>
+    <string name="item_scan">激光扫描</string>
+    <string name="item_uhf">UHF</string>
 </resources>
